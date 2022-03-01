@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Running Events</title>
+    <link rel="stylesheet" href="style/newStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script/script.js"></script>
+</head>
+
+<body>
+<div id='header'>
+    <div class = 'navBar'>
+        <button id='homeButton'>RunningEvents</button>
+        <button id='homeSmallButton'>Home</button>
+        <button id='classificationsButton'>Classifications</button>
+        <button id='aboutButton'>About the Company</button>
+        <button id='aboutSmallButton'>About</button>
+        <button id='signInButton'>Sign in</button>
+        <button id='signUpButton'>Sign up</button>
+        <button id='adminButton'>Admin</button>
+    </div>
+</div>
+<img src='images/sport.png' alt="logo" id="logo"><img>
+
+<div id = "home">
+    <div id="searchInput">
+        <input type="text" id="searchTextBox">
+        <img src="images/search.png" alt="search" id="searchIcon"><img>
+    </div>
+    <div id = "paginationMechanism"></div>
+    <div id="notFoundAnyEvents"></div>
+    <div id ="eventsContainer">
+
+       <!-- <div class = 'events' id="event1">
+            <h3>Event title.</h3>
+            <div class = "imageWrapper">
+            <img src ='images/sport.png' class="eventPic">
+        </div>
+            <div class = 'eventInfo'>
+                <p>Evento de corrida disputado anualmente e muito frequentado
+                    por pessoas de todas as idades e lugares do mundo. Venha correr
+                    você também!</p>
+                <p>Data: 22/10/2022</p>
+                <p>Preço: 5$.</p>
+            </div>
+            <button class = 'seeCompetitors'>See all competitors!</button>
+            <button class = 'seeClassifications'>See the classifications!</button>
+        </div>-->
+    </div>
+</div>
+
+<div id = "classifications">
+    <h2>Classifications.</h2>
+</div>
+
+<div id = "about">
+    <h2>About the company.</h2>
+    <p>This is a mockup website of a company that promotes and helps to organize running events,
+        providing a web solution for event organizers. The website allows athletes to register and
+        enroll for running, also maintaining a persistent database of their classifications and other
+        statistics. Administrators can register new events and update the data concerning the athletes'
+        performance in each race. This platform is a RESTful Webapp implemented with the SpringBoot
+        framework, making use of JPA and a PostgreSQL database. It was developed by Lucas Werle Melz.</p>
+</div>
+
+<div id = "signIn"><h2>Sign in.</h2></div>
+<div id = "signUp"><h2>Sign up.</h2></div>
+
+</body>
+</html>

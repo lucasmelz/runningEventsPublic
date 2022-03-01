@@ -1,0 +1,390 @@
+
+        
+        * {
+            box-sizing: border-box;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+
+        
+        /* Simple Responsive Framework. */
+        .row {
+            width: 100%;
+        }
+        
+        .navBar a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 1.5% 1.5%;
+            text-decoration: none;
+            font-size: 2.1vw;
+        }
+        
+        .navBar a:hover {
+            background-color: rgb(2, 32, 5);
+            color: rgb(237, 240, 236);
+        }
+        
+        .navBar a.active {
+            background-color:black;
+            color:rgb(9, 75, 20);
+        }
+        
+        #header{
+            background-color: rgba(24, 133, 57, 0.815);
+            position:relative;
+            top:0px;
+            height: 5.45vw;
+            width:100vw;
+            margin-left:-7px;
+        }
+
+        
+        body{
+            width:100vw;
+            height:300vh;
+            font-size: 1em;
+        }
+
+        label {
+            margin-top: 4px;
+            margin-bottom: -13px;
+            display: block;
+        }
+        
+        #logo{
+            position:relative;
+            float:left;
+            margin-top:2px;
+            background-color: rgb(4, 37, 14);
+            border-radius: 50%;
+            padding: 5px 5px 5px 5px;
+            border:rgb(124, 240, 158);
+            border-style:solid;
+            border-width: 0.2em;
+            margin-left:22px;
+            height: 10vw;
+        }
+        
+        body{
+            background-color: rgb(231, 230, 230);
+        }
+        
+        #aboutSmallButton{display:none;}
+        #homeSmallButton{display:none;}
+
+        .standardForm{
+            width:25%;
+            margin: 0 auto;
+        }
+
+        
+        #searchEvent{
+            text-align:justify;
+            font-size:1.1em;
+            width:200px;
+            margin: auto;
+            padding-top:5px;
+        }
+        #eventInput{
+            margin:2px;
+        }
+        #submitEvent{
+            margin-left:67px;
+        }
+
+        .submitForm{
+            margin-top: 5px;
+            margin-left:67px;
+        }
+
+        #searchLabel{
+            margin-left:4px;
+        }
+
+
+        #searchResults, #eventsList, #listOfCompetitors, #results, #allEvents{
+            text-align:justify;
+            padding-left:3vw;
+            padding-right:4.5vw;
+            display:none;
+        }
+
+        
+        p {
+            margin-bottom: -1vh;
+            margin-right: 1vw;
+            margin-left: 2vw;
+            text-align: justify;
+        }
+
+        
+        h2, h3{
+            text-align: center;
+        }
+
+
+        h5{
+            text-align:justify;
+            padding: 0vw 4vw 2vw 4vw;
+        }
+
+        #home{
+            margin-left:4vw;
+        }
+
+        
+        button{
+            margin: 10px;
+            margin-bottom:-10vh;
+            padding:2px;
+        }
+        
+        #about{
+            display: none;
+            text-align: center;
+            font-size: larger;
+        }
+
+        #signIn{
+            display:none;
+
+        }
+
+        #signUp{
+            display:none;
+        }
+
+        #loginTitle{
+            text-align: left;
+            margin-left: 82px;
+            margin-right: -70px;
+        }
+
+        #submitLogin{
+            margin-left:84px;
+        }
+
+        #myAccount{
+            display: none;
+        }
+
+        #listOfCompetitors > p{
+            text-align: center;
+        }
+
+        #eventsList button, #searchResults button{
+            margin-bottom: -1vh;
+            margin-right: 1vw;
+            margin-left: 2vw;
+            text-align: justify;
+        }
+
+        #listOfEnrollments h4{
+            margin-left:2vw;
+        }
+
+        #seeClassificationsButton{
+            margin-left:4vw;
+        }
+
+        #registerEventSmall{
+            display: none;
+        }
+
+        #classificationsAdmin{
+            display: inherit;
+        }
+
+        #registerEventSection, #results, #recordTimeStamps{
+            display: none;
+        }
+
+        .searchAdmin{
+            display:none;
+        }
+
+        #recordTimeStamps{
+            text-align:justify;
+            width:80vw;
+            margin: auto;
+            padding-top:0px;
+            padding-left:5.5vw;
+        }
+
+        .recordDiv{
+            margin:0 auto;
+        }
+
+        .eventTitle:hover{
+            -webkit-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+
+        #rtInstructions{
+            margin-top:-1vh;
+            text-align: center;
+            margin-left: -6vw;
+            margin-bottom:2vh;
+        }
+
+        .selectionParagraph{
+            text-align: center;
+        }
+
+        #registerEventForm{
+            padding-left:5.5%;
+            padding-right:5.8%;
+        }
+
+        #enrollmentLabel{
+            width:121px;
+        }
+
+        #submitRegisterEvent{
+            margin-left:36px;
+            width:110px;
+        }
+
+        #classificationsAdmin, #classifications{
+            width:50vw;
+            margin:auto;
+        }
+
+        @media (min-width:1025px){
+            h2{
+                margin-right: 8vw;
+            }
+        }
+
+        @media (max-width:1024px){
+
+            h2{
+                margin-right: 6vw;
+            }
+
+
+        }
+
+        @media (max-width:768px){
+
+            #registerEventForm{
+                padding-left:4%;
+                padding-right:6%;
+            }
+
+
+            #submitLogin{
+                marginLeft: 72px;
+            }
+        }
+        
+        @media (max-width:620px){
+            #seeClassificationsButton{
+                margin-left:1vw;
+            }
+
+            #registerEvent{
+                display:none;
+            }
+
+            #registerEventSmall{
+                display:inherit;
+            }
+
+
+            #header{
+                height:8.5vw;
+            }
+            
+            .navBar a {
+                float: left;
+                color: white;
+                text-align: center;
+                padding: 2% 1.5% 2.5% 1.5%;
+                text-decoration: none;
+                font-size: 3.4vw;
+            } 
+            #homeSmallButton{
+                padding-left:22px;
+            }
+            
+            #logo{
+                display:none;
+            }
+            
+            #aboutButton{display:none;}
+            #aboutSmallButton{display:inherit;}
+            #homeButton{display:none;}
+            #homeSmallButton{display:inherit;}
+
+            h2 {
+                font-size: 1em;
+            }
+
+            h5 {
+                font-size: 0.7em;
+            }
+
+            #loginForm{
+                margin-left:22vw;
+            }
+
+        }
+
+        @media (max-width:580px){
+
+            #registerEventForm{
+                padding-left:2%;
+                padding-right:6%;
+            }
+
+
+            .standardForm{
+                margin-left:30vw;
+            }
+
+            #loginForm{
+                margin-left:20vw;
+            }
+
+
+        }
+
+        @media (max-width:480px){
+
+        }
+        @media (max-width:375px){
+
+
+            .standardForm{
+                margin-left:25vw;
+            }
+
+
+            #loginForm{
+                margin-left:18vw;
+            }
+
+        }
+
+        @media (max-width:359px){
+            .standardForm{
+                margin-left:20vw;
+            }
+
+
+            #loginForm{
+                margin-left:18vw;
+            }
+
+        }
+
+        .formTitle{
+            text-align: left;
+            margin-left:40px;
+        }
+

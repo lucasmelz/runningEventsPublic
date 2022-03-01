@@ -1,0 +1,658 @@
+
+        * {
+            box-sizing: border-box;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        body {
+            width:100vw;
+            font-size: 1em;
+            background-color: rgb(231, 230, 230);
+        }
+
+        /*Navigation header (menu) and logo styles*/
+
+        #header{
+            background-color: rgba(24, 133, 57, 0.815);
+            position:relative;
+            top:0;
+            height: 5.45vw;
+            width:100vw;
+            margin-left:-7px;
+        }
+
+        .navBar{
+          display: flex;
+          justify-content: center;
+          height: 5.45vw;
+          width:100vw;
+          padding-left:4vw;
+        }
+
+         .navBar button
+         {
+             background-color:transparent;
+             color: white;
+             border: none;
+             text-align: center;
+             padding: 1.5% 1.5%;
+             text-decoration: none;
+             font-size: 2.1vw;
+         }
+
+         .adminNavBar button{
+             padding: 1.2% 1.2%;
+         }
+
+         .navBar button:hover {
+            background-color: rgb(2, 32, 5);
+            color: rgb(237, 240, 236);
+         }
+
+         .navBar button.active {
+             background-color:black;
+             color:rgb(9, 75, 20);
+         }
+
+          #logo{
+              position:absolute;
+              left:10px;
+              top:10px;
+              background-color: rgb(4, 37, 14);
+              border-radius: 50%;
+              padding: 5px 5px 5px 5px;
+              border: 0.2em solid rgb(124, 240, 158);
+              height: 10vw;
+           }
+
+         /* Menu buttons that will only be displayed if the screen is small. */
+
+         #homeSmallButton{
+             display:none;
+         }
+
+         #aboutSmallButton{
+            display:none;
+         }
+
+
+        /* Sections of the website. The only one that is originally displayed is the home section. */
+
+        #home{
+            display:inherit;
+        }
+
+        #classifications{
+            display:none;
+        }
+
+        #about{
+            display:none;
+        }
+
+        #signIn{
+            display:none;
+        }
+
+        #signUp{
+            display:none;
+        }
+
+        #classificationsAdmin{
+            display:inherit;
+            width:290px;
+            margin: auto;
+        }
+
+        #classificationsAdmin p{
+            width:100%;
+            font-size:1.1em;
+            text-align:center;
+        }
+
+        #classificationsOptions{
+            text-align: center;
+        }
+
+        #classificationsOptions select{
+            width:250px;
+        }
+
+        #classificationsOptions button{
+            margin-top: 5px;
+        }
+
+        #recordTimestamps{
+            display:none;
+        }
+
+        #eventManagement{
+            display:none;
+        }
+
+        /* Styling headers, paragraphs, forms, buttons, etc... */
+
+        h2, h3{
+            text-align: center;
+            font-size:1.5em;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 12px;
+        }
+
+        h4{
+            text-align:center;
+        }
+
+        h2{
+            font-size:2em;
+        }
+
+        p{
+            width:90%;
+            margin: 0 auto;
+            text-align:justify;
+            font-size: large;
+        }
+
+        /* Styling pagination mechanism */
+        #paginationMechanism{
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #paginationMechanism button {
+            color: black;
+            padding: 8px 16px;
+            border: none;
+            font-size:medium;
+        }
+
+        #paginationMechanism button.active {
+            background-color: rgba(24, 133, 57, 0.815);
+            color: white;
+            border-radius: 5px;
+        }
+
+        #paginationMechanism button:hover:not(.active) {
+            background-color: #ddd;
+            border-radius: 5px;
+        }
+
+        /* Styling search mechanism */
+
+        #searchInput{
+            width: 235px;
+            margin: 0 auto 8px;
+            padding-left:25px;
+        }
+
+        #searchIcon{
+            position:absolute;
+            float:right;
+            width: 25px;
+            height: auto;
+            padding: 3px;
+            background-color: rgb(239, 239, 239);
+            border-radius:30%;
+            border: 1px solid #7c7979;
+        }
+
+        #searchIcon:hover{
+            transform: scale(1.08);
+        }
+
+        #searchTextBox{
+            height:25px;
+            margin-right:-4px;
+            margin-left:6px;
+        }
+
+        /* Styling event cards and event container */
+
+        #eventsContainer{
+            width:85vw;
+            margin: 0 auto;
+            display:grid;
+            grid-template-columns: repeat(2,42.5vw);
+            grid-template-rows: repeat(2, minmax(39vw, 45vw));
+        }
+
+        .events{
+            background: #d7cece;
+            margin: 15px;
+            border-radius: 5%;
+            text-align: center;
+            display: grid;
+            grid-template-rows: 0.5fr 3.5fr 3fr 1.5fr 1.5fr;
+        }
+
+        .seeClassifications, .seeCompetitors, .enrollButton{
+            width:100%;
+            border: none;
+            font-size:large;
+            font-weight: bold;
+            color:white;
+            padding:3px;
+        }
+
+        .seeCompetitors:hover, .seeClassifications:hover, .enrollButton:hover{
+            background-color: rgb(2, 32, 5);
+            color: rgb(237, 240, 236);
+        }
+
+        .seeCompetitors{
+            background-color: #4CAF50;
+        }
+
+        .seeClassifications, .enrollButton{
+            background-color: rgba(24, 133, 57, 0.815);
+            border-bottom-left-radius: 15%;
+            border-bottom-right-radius: 15%;
+        }
+
+        .eventPic {
+            height:20vh;
+            width: auto;
+            max-width: 28vh;
+        }
+
+        /* Styling event management */
+
+        #mngButtons{
+            width:350px;
+            margin:0 auto;
+        }
+
+        .eventMngButton{
+            width:170px;
+            height: 35px;
+            margin: auto;
+            text-align: center;
+            font-size: medium;
+            font-weight: bold;
+            border:none;
+            border-radius:5%;
+            background: rgba(24, 133, 57, 0.815);
+            color:white;
+        }
+
+        .eventMngButton:hover, #createNewEventButton.active, #updateEventInfoButton.active{
+            background-color: rgb(2, 32, 5);
+            color: rgb(237, 240, 236);
+        }
+
+        #registerEventContainer, #updateEventInfoContainer, #selectEventToRecordTSContainer {
+            width: 290px;
+            margin: 15px auto 0;
+            padding-left: 15px;
+        }
+
+        #recordOptions{
+            text-align: center;
+            width: 290px;
+            margin: 10px auto 0;
+        }
+
+        #recordOptions p.selectionParagraph{
+            font-size: 1em;
+            text-align: center;
+        }
+
+        #selectAthlete{
+            margin-bottom:12px;
+        }
+
+        #selectPoint{
+            width:50px;
+            margin: 0 auto 12px;
+        }
+
+        #registerEventContainer, #updateEventInfoContainer{
+            display: none;
+        }
+
+        #eventNameForm, #descriptionForm{
+            width: 245px;
+        }
+
+        #dayForm, #monthForm, #yearForm, #hourForm, #minForm{
+            width:28px;
+            margin-right:3px;
+            margin-bottom:8px;
+        }
+
+        #dayForm{
+            margin-left:4px;
+        }
+
+        #hourForm{
+            margin-left:-2px;
+        }
+
+        #yearForm{
+            width:38px;
+        }
+
+        #enrollmentPriceForm{
+            width:34px;
+            margin-bottom:10px;
+        }
+
+        #imageFile{
+            margin-top:4px;
+        }
+
+        #minutesLabel{
+            font-size: 0.85em;
+        }
+
+        #minForm{
+            margin-left:-2px;
+        }
+
+        input, textarea{
+            margin-bottom:5px;
+        }
+
+        #submitRegisterEvent{
+            width:106px;
+            margin-left:73px;
+            margin-top: 8px;
+        }
+
+        #updateEventInfoContainer select{
+            margin-top:-10px;
+            margin-bottom:10px;
+        }
+
+        #updateEventInfoContainer h4{
+            margin-top:15px;
+            margin-bottom:15px;
+        }
+
+        #updateEventInfoContainer button{
+            width:258px;
+            border:none;
+            background:rgba(24, 133, 57, 0.815);
+            color:white;
+            font-size:1em;
+            margin: auto auto 1px;
+        }
+
+        #updateEventInfoContainer button:hover, #updateEventInfoContainer button.active{
+            background-color: rgb(2, 32, 5);
+            color: rgb(237, 240, 236);
+        }
+
+        #updateName, #updateDescription, #updateDate, #updatePrice, #updateImage{
+            text-align: center;
+        }
+
+        #updateEventInfoContainer .confirm{
+            width:190px;
+            font-size:0.8em;
+            border-radius: 5%;
+            background: lightgray;
+            color:black;
+            border: 1px solid black;
+            margin-bottom:8px;
+        }
+
+        #updateEventInfoContainer input{
+            width: 173px;
+        }
+
+        #updateEventInfoContainer #dayInput, #updateEventInfoContainer #monthInput,
+        #updateEventInfoContainer #hourInput, #updateEventInfoContainer #minInput{
+            width:28px;
+            margin-right:5px;
+        }
+
+        #updateEventInfoContainer #yearInput, #updateEventInfoContainer #priceInput{
+            width:40px;
+        }
+
+        #updateDateConfig{
+            margin-top:5px;
+        }
+
+        #imageInput{
+            margin-top:8px;
+            margin-bottom:8px;
+        }
+
+
+        @media (min-width:1186px){
+         .events{
+             grid-template-rows: 1fr 2.8fr 3.2fr 1.5fr 1.5fr;
+         }
+
+            .eventPic{
+                height:22vh;
+                max-width:38vh;
+                margin-top:-13px;
+            }
+
+            h3{
+                font-size: 1.5em;
+            }
+
+            p{
+                font-size: 1.3em;
+            }
+            #eventsContainer {
+                grid-template-rows: repeat(2, minmax(23vw, 43vw));
+            }
+        }
+
+        @media (max-width:1185px){
+
+
+            .events{
+                grid-template-rows: 1fr 2.6fr 3fr 1.7fr 1.7fr;
+            }
+
+            .eventPic{
+                height:20vh;
+                max-width:34vh;
+                margin-top:-13px;
+            }
+
+            h3{
+                font-size: 1.4em;
+            }
+
+            p{
+                font-size: 1.2em;
+            }
+
+            #eventsContainer {
+                grid-template-rows: repeat(2, minmax(23vw, 50vw));
+            }
+        }
+
+        @media (max-width:943px){
+            .events{
+                grid-template-rows: 1fr 2.8fr 3.2fr 1.5fr 1.5fr;
+            }
+
+            .eventPic {
+                height:20vh;
+                width: auto;
+                max-width: 28vh;
+            }
+
+
+            h3{
+                font-size: 1.25em;
+            }
+
+            #eventsContainer {
+                grid-template-rows: repeat(2, minmax(35vw, 61vw));
+            }
+
+        }
+
+        @media (max-width:811px){
+            #eventsContainer {
+                grid-template-columns: 85vw;
+                grid-template-rows: repeat(4, minmax(42vw, 70vw));
+            }
+
+            .events{
+                grid-template-rows: 1fr 3fr 3.25fr 1.375fr 1.375fr;
+            }
+
+            .eventPic{
+                height:22vh;
+                max-width:40vh
+            }
+
+            .seeCompetitors, .seeClassifications{
+                font-size:medium;
+            }
+
+            h2{
+                font-size:1.4em;
+            }
+
+            p{
+                font-size: 1.2em;
+            }
+        }
+
+
+    @media (max-width:620px){
+
+        #eventsContainer {
+            grid-template-columns: 85vw;
+            grid-template-rows: repeat(4, minmax(50vw, 85vw));
+        }
+
+
+        #header{
+            height:8.5vw;
+        }
+
+         .navBar{
+             padding-left:0;
+          }
+
+        .navBar button {
+            height:8.5vw;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 3.6vw;
+            display:inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .adminNavBar button{
+            font-size:3.2vw;
+        }
+
+        #logo{
+            display:none;
+        }
+
+        h3{
+            font-size: 1.2em;
+        }
+
+        #aboutButton{display:none;}
+        #aboutSmallButton{display:inherit;}
+        #homeButton{display:none;}
+        #homeSmallButton{display:inherit;}
+    }
+
+
+        @media (max-width:537px) {
+
+            #eventsContainer {
+                grid-template-columns: 85vw;
+                grid-template-rows: repeat(4, minmax(40vw, 105vw));
+            }
+
+            .eventPic{
+                height:18vh;
+                max-width:34vh
+            }
+
+
+            h2{
+                margin-top:5px;
+            }
+
+            .seeCompetitors, .seeClassifications{
+                font-size:0.9em;
+            }
+
+            #mngButtons{
+                width:290px;
+            }
+
+            .eventMngButton{
+                font-size: small;
+                width:140px;
+            }
+
+        }
+
+        @media (max-width:420px) {
+
+            #eventsContainer {
+                grid-template-columns: 85vw;
+                grid-template-rows: repeat(4, minmax(70vw, 120vw));
+            }
+
+            .eventPic{
+                height:22vh;
+                max-width:34vh
+            }
+
+            .events{
+                grid-template-rows: 1fr 3.5fr 3fr 1.25fr 1.25fr;
+            }
+
+
+            h2{
+                margin-top:0;
+                margin-bottom:8px;
+                font-size: 1.2em;
+            }
+
+            h3{
+                margin-top:8px;
+                font-size: 1em;
+            }
+
+        }
+
+
+        @media (max-width:367px) {
+
+            p{
+                font-size: small;
+            }
+
+            h2{
+                font-size: 1.2em;
+            }
+
+            h3{
+                font-size: 1em;
+            }
+
+            #eventsContainer {
+                margin-left:5vw;
+                grid-template-columns: 87.5vw;
+                grid-template-rows: repeat(4, minmax(90vw, 110vw));
+            }
+
+        }
+
+
+

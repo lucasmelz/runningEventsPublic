@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div id="registerEventSection">
+    <h2>Register new event</h2>
+
+    <form class="standardForm" id = "registerEventForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="eventNameForm" name="name"><br>
+        <label for="description">Description:</label><br>
+        <input type="text" id="descriptionForm" name="description"><br>
+        <label for="enrollmentPrice" id="enrollmentLabel">Enrollment price:</label><br>
+        <input type="text" id="enrollmentPriceForm" name="enrollmentPrice"><br>
+        <label for="day">Day:</label><br>
+        <input type="text" id="dayForm" name="day"><br>
+        <label for="month">Month:</label><br>
+        <input type="text" id="monthForm" name="month"><br>
+        <label for="year">Year:</label><br>
+        <input type="text" id="yearForm" name="year"><br>
+        <label for="hour">Hour:</label><br>
+        <input type="text" id="hourForm" name="hour"><br>
+        <label for="min">Minutes:</label><br>
+        <input type="text" id="minForm"  name="min"><br>
+        <label for="customFile">Event presentation image:</label><br>
+        <input type="file" name="file" id="imageFile"> <br>
+        <button class="submitForm" type="button" id="submitRegisterEvent" onclick="registerEvent()">Register event.</button>
+    </form>
+</div>
+
+    <div id="registerEventOutput">
+
+    </div>
+<script type='text/javascript'>
+
+
+    function registerEvent(){
+
+        let name = document.getElementById("eventNameForm").value;
+        let description = document.getElementById('descriptionForm').value;
+        let enrollmentPrice = Number(document.getElementById('enrollmentPriceForm').value);
+        let day = Number(document.getElementById('dayForm').value);
+        let month = Number(document.getElementById('monthForm').value);
+        let year = Number(document.getElementById('yearForm').value);
+        let hour = Number(document.getElementById('hourForm').value);
+        let min = Number(document.getElementById('minForm').value);
+        let picture = "";
+
+        let filesSelected = document.getElementById("imageFile").files;
+        if (filesSelected.length > 0) {
+            var fileToLoad = filesSelected[0];
+            var fileReader = new FileReader();
+            fileReader.onload = function (fileLoadedEvent) {
+                picture = fileLoadedEvent.target.result; // <--- data: base64
+                console.log(typeof(picture));
+                let output = document.getElementById('registerEventOutput');
+                output.innerHTML = "";
+                let message = document.createElement("h3");
+
+                switch(true){
+                    case name==='':
+                        message.innerText = "The event must have a name!";
+                        output.appendChild(message);
+                        break;
+                    case description===''||description.length<20:
+                        message.innerText = "Event description must have at least 20 characters.";
+                        output.appendChild(message);
+                        break;
+                    case enrollmentPrice<0:
+                        message.innerText = "Invalid enrollment price.";
+                        output.appendChild(message);
+                        break;
+                    case day>31||day<1:
+                        message.innerText = "Invalid day format.";
+                        output.appendChild(message);
+                        break;
+                    case month>12||month<1:
+                        message.innerText = "Invalid month format.";
+                        output.appendChild(message);
+                        break;
+                    case min>60||min<0:
+                        message.innerText = "Invalid format for minutes.";
+                        output.appendChild(message);
+                        break;
+                    case hour>24||hour<0:
+                        message.innerText = "Invalid format for hour.";
+                        output.appendChild(message);
+                        break;
+                    default:
+                        $.ajax({
+                            type: "POST",
+                            url: "api/v1/registerEvent",
+                            data: JSON.stringify({name: name,
+                                description: description,
+                                enrollmentPrice: enrollmentPrice,
+                                day: day,
+                                month:month,
+                                year: year,
+                                hour: hour,
+                                min: min,
+                                picture: picture
+                            }),
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        message.innerText = `The event \"${name}\" has been successfully registered!`;
+                        output.appendChild(message);
+                        break;
+                }
+            }
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
+</script>
+</body>
+</html>
