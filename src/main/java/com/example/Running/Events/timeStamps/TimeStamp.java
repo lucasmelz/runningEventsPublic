@@ -44,9 +44,8 @@ public class TimeStamp {
     private LocalDateTime p3;
     @Nullable
     private LocalDateTime finish;
-    @OneToOne
-    @JoinColumn(name = "final_time_id")
-    private FinalTime finalTime;
+    @Nullable
+    private Long finalTime;
 
 
     public TimeStamp(String username, Long eventId,
@@ -55,37 +54,6 @@ public class TimeStamp {
         this.eventId = eventId;
         this.competitiveCategory = competitiveCategory;
         this.gender = gender;
-    }
-
-   public Optional<FinalTime> getFinalTime(){
-
-        if(this.finish!=null && this.start!=null){
-
-            LocalDateTime tempDateTime = LocalDateTime.from(this.start);
-
-            int years = (int) tempDateTime.until(this.finish, ChronoUnit.YEARS );
-            tempDateTime = tempDateTime.plusYears( years );
-
-            int months = (int) tempDateTime.until(this.finish, ChronoUnit.MONTHS );
-            tempDateTime = tempDateTime.plusMonths( months );
-
-            int days = (int) tempDateTime.until(this.finish, ChronoUnit.DAYS );
-            tempDateTime = tempDateTime.plusDays( days );
-
-            int hours = (int) tempDateTime.until(this.finish, ChronoUnit.HOURS );
-            tempDateTime = tempDateTime.plusHours( hours );
-
-            int minutes = (int) tempDateTime.until(this.finish, ChronoUnit.MINUTES );
-            tempDateTime = tempDateTime.plusMinutes( minutes );
-
-            int seconds = (int) tempDateTime.until(this.finish, ChronoUnit.SECONDS );
-
-            int nanoOfSeconds = (int) tempDateTime.until(this.finish, ChronoUnit.NANOS );
-
-            this.finalTime = new FinalTime(years, days, hours, minutes, seconds, nanoOfSeconds);
-            return Optional.of(this.finalTime);
-        }
-        return null;
     }
 
     public void setStart(int year, int month, int dayOfMonth, int hour, int minute, int second) {

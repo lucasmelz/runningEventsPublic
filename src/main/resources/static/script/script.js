@@ -228,3 +228,253 @@ function pagination(current, length, delta = 3) {
      return pages;
 }
 
+
+function setClassificationsOptions(){
+
+     let options = document.getElementById("classificationsOptions");
+     options.innerHTML = "";
+     document.getElementById('classificationsOutput').innerHTML = "";
+
+     $.get("/api/v1/getEvents", "", function (){}).done(function (data) {
+
+          let events = JSON.parse(JSON.stringify(data));
+          events = events.sort(sortBy("name"));
+
+          let eventSelector = document.createElement("select");
+          eventSelector.setAttribute("id", "classificationsEventSelector");
+
+          let disabledOption = document.createElement("option");
+          disabledOption.text = "";
+          disabledOption.setAttribute("disabled", "disabled");
+          disabledOption.setAttribute("selected", "selected");
+          eventSelector.appendChild(disabledOption);
+
+          for(let i = 0; i<events.length; i++){
+               let option = document.createElement("option");
+               option.text = events[i]['name'];
+               option.value = events[i]['id'];
+               eventSelector.appendChild(option);
+          }
+
+          let competitiveCategorySelector = document.createElement("select");
+          competitiveCategorySelector.setAttribute("id", "classificationsCategorySelector");
+          let categories = ["Youth: 18 to 19 years old", "Senior: 20 to 34 years old",
+               "Veteran 35: 35 to 39 years old", "Veteran 40: 40 to 49 years old",
+               "Veteran 50: 50 to 59 years old", "Veteran 60+: 60 years old or more", "General"];
+          for (let i = 0; i<categories.length-1; i++){
+               let option = document.createElement("option");
+               option.text = categories[i];
+               option.value = (i).toString();
+               competitiveCategorySelector.appendChild(option);
+          }
+          let generalOption = document.createElement("option");
+          generalOption.text = categories[6]; // general category option is selected as default
+          generalOption.value = (6).toString(); //               \/ \/ \/ \/ \/
+          generalOption.setAttribute("selected", "selected");
+          competitiveCategorySelector.appendChild(generalOption);
+
+          let genderSelector = document.createElement("select");
+          genderSelector.setAttribute("id", "classificationsGenderSelector");
+          let genders = ['Male', 'Female', 'General'];
+          for(let i = 0; i<genders.length-1; i++){
+               let option = document.createElement("option");
+               option.text = genders[i];
+               option.value = (i).toString();
+               genderSelector.appendChild(option);
+          }
+          let option = document.createElement("option");
+          option.text = genders[2]; //gender option "general" is selected as default option
+          option.value = (2).toString(); //               \/ \/ \/ \/ \/
+          option.setAttribute("selected", "selected");
+          genderSelector.appendChild(option);
+
+
+          let stages = ['P1', 'P2', 'P3', 'Finish'];
+          let stageSelector = document.createElement("select");
+          stageSelector.setAttribute("id", "classificationsStageSelector");
+
+          for (let i = 0; i<stages.length-1; i++){
+               let option = document.createElement("option");
+               option.text = stages[i];
+               option.value = stages[i].toLowerCase();
+               stageSelector.appendChild(option);
+          }
+
+          let finishOption = document.createElement("option");
+          finishOption.text = stages[3];  //Finish is selected as default stage option
+          finishOption.value = stages[3].toLowerCase(); //   \/ \/ \/ \/ \/ \/ \/
+          finishOption.setAttribute("selected", "selected");
+          stageSelector.appendChild(finishOption);
+
+          let button = document.createElement("button");
+          button.innerText = "See classifications";
+          button.addEventListener("click", function (){
+               calculateClassifications();
+          });
+
+          let p = document.createElement("p");
+          p.innerText = "Select event, competitive category, gender and the stage of the running.";
+
+          options.appendChild(p);
+          options.appendChild(document.createElement("br"));
+          options.appendChild(eventSelector);
+          options.appendChild(document.createElement("br"));
+          options.appendChild(competitiveCategorySelector);
+          options.appendChild(document.createElement("br"));
+          options.appendChild(genderSelector);
+          options.appendChild(document.createElement("br"));
+          options.appendChild(stageSelector);
+          options.appendChild(document.createElement("br"));
+          options.appendChild(button);
+          options.appendChild(document.createElement("br"));
+     });
+}
+
+function calculateClassifications(){
+
+     let output = document.getElementById("classificationsOutput");
+     output.innerHTML = "";
+     let eventSelector = document.getElementById('classificationsEventSelector');
+     let eventId = eventSelector.options[eventSelector.selectedIndex].value;
+     let categorySelector = document.getElementById('classificationsCategorySelector');
+     let category = categorySelector.options[categorySelector.selectedIndex].value;
+     let genderSelector = document.getElementById('classificationsGenderSelector');
+     let gender = genderSelector.options[genderSelector.selectedIndex].value;
+     let stageSelector = document.getElementById('classificationsStageSelector');
+     let stage = stageSelector.options[stageSelector.selectedIndex].value;
+
+     let categories = ['YOUTH', 'SENIOR', 'VETERAN_35', 'VETERAN_40', 'VETERAN_50', 'VETERAN_60'];
+     let genders = ['MALE', 'FEMALE'];
+
+
+     $.get("/api/v1/getTimeStamps", {eventId: eventId}, function (data) {
+
+          let competitors = [];
+          if(data.length) {
+
+               switch(true){
+                    case gender==2 && category==6:
+                         competitors = data;
+                         break;
+
+                    case gender==2:
+                         competitors = data.filter( c => c.competitiveCategory===categories[category]);
+                         break;
+
+                    case category==6:
+                         competitors = data.filter(c => c.gender===genders[gender]);
+                         break;
+
+                    default:
+                         competitors = data.filter( c => c.competitiveCategory===categories[category] &&
+                             c.gender===genders[gender]);
+                         break;
+               }
+
+               switch(stage){
+
+                    case "p1":
+                         for(let i = 0; i<competitors.length; i++){
+                              if(competitors[i]['start']===null || competitors[i]['p1']===null){
+                                   competitors.splice(i,1);
+                                   i--;
+                              }
+                              else{
+                                   let startDate = new Date(competitors[i]['start']);
+                                   let p1Date = new Date(competitors[i]['p1']);
+                                   competitors[i]['finalTime'] = Math.abs(p1Date - startDate);
+                              }
+                         }
+                         break;
+
+                    case "p2":
+                         for(let i = 0; i<competitors.length; i++){
+                              if(competitors[i]['start']===null || competitors[i]['p2']===null){
+                                   competitors.splice(i,1);
+                                   i--;
+                              }
+                              else{
+                                   let startDate = new Date(competitors[i]['start']);
+                                   let p2Date = new Date(competitors[i]['p2']);
+                                   competitors[i]['finalTime'] = Math.abs(p2Date - startDate);
+                              }
+                         }
+                         break;
+
+                    case "p3":
+                         for(let i = 0; i<competitors.length; i++){
+                              if(competitors[i]['start']===null || competitors[i]['p3']===null){
+                                   competitors.splice(i,1);
+                                   i--;
+                              }
+                              else{
+                                   let startDate = new Date(competitors[i]['start']);
+                                   let p3Date = new Date(competitors[i]['p3']);
+                                   competitors[i]['finalTime'] = Math.abs(p3Date - startDate);
+                              }
+                         }
+                         break;
+
+                    case "finish":
+                         for(let i = 0; i<competitors.length; i++){
+                              if(competitors[i]['start']===null || competitors[i]['finish']===null){
+                                   competitors.splice(i,1);
+                                   i--;
+                              }
+                              else{
+                                   let startDate = new Date(competitors[i]['start']);
+                                   let finishDate = new Date(competitors[i]['finish']);
+                                   competitors[i]['finalTime'] = Math.abs(finishDate - startDate);
+                              }
+                         }
+                         break;
+               }
+
+               competitors.sort(function (a, b) {
+                    return a.finalTime - b.finalTime;
+               });
+
+
+               for(let i = 0; i<competitors.length; i++){
+
+                    let p = document.createElement("p");
+
+                    $.get("/api/v1/getEnrollmentsByUsername",
+                        {username: competitors[i]['username']},function(data) {
+
+                             let competitorName = data[0]['name'];
+
+                             let hours = competitors[i]['finalTime'] / 3600000;
+                             let minutes = 0;
+                             let seconds = 0;
+                             let milliseconds = 0;
+                             if (hours >= 1) {
+                                  hours = hours - (hours % 1);
+                                  competitors[i]['finalTime'] -= hours * 3600000;
+                             } else hours = 0;
+
+                             minutes = competitors[i]['finalTime'] / 60000;
+                             if (minutes >= 1) {
+                                  minutes = minutes - (minutes % 1);
+                                  competitors[i]['finalTime'] -= minutes * 60000;
+                             } else minutes = 0;
+
+                             seconds = competitors[i]['finalTime'] / 1000;
+                             if (seconds >= 1) {
+                                  seconds = seconds - (seconds % 1);
+                                  competitors[i]['finalTime'] -= seconds * 1000;
+                             } else seconds = 0;
+
+                             milliseconds = competitors[i]['finalTime'];
+
+                             p.innerText = `${i + 1}º place: ${competitorName}. 
+                    Time: ${hours} hours; ${minutes} min; ${seconds} sec; ${milliseconds} ms.`;
+
+                        })
+                    output.appendChild(p);
+               }
+          }
+     })
+}
+
+

@@ -623,6 +623,14 @@ function startRecordingTimestamps(){
 
 function setTimestamps(eventId){
 
+    let inputs = document.getElementById('timestampInputs');
+    if (!!inputs){
+        inputs.remove();
+    }
+
+    let divTimestampInputs = document.createElement("div");
+    divTimestampInputs.setAttribute("id", "timestampInputs");
+
     let paragraph = document.createElement("p");
     paragraph.innerText = "Select point corresponding to the timestamp ";
     let s = document.createElement("select");
@@ -650,7 +658,7 @@ function setTimestamps(eventId){
     paragraph.appendChild(document.createElement("br"));
     paragraph.appendChild(s);
     paragraph.setAttribute("class", "selectionParagraph");
-    document.getElementById(`recordOptions`).appendChild(paragraph);
+    divTimestampInputs.appendChild(paragraph);
 
     //these next paragraphs will contain the input boxes for registering the athletes' timestamps
 
@@ -736,8 +744,8 @@ function setTimestamps(eventId){
     paragraph3.setAttribute("style", "font-size:0.8em; text-align:center;");
     paragraph4.setAttribute("style", "font-size:0.8em; text-align:center;");
 
-    document.getElementById("recordOptions").appendChild(paragraph2);
-    document.getElementById("recordOptions").appendChild(paragraph3);
+    divTimestampInputs.appendChild(paragraph2);
+    divTimestampInputs.appendChild(paragraph3);
 
     let submitTimestamp = document.createElement("button");
     submitTimestamp.addEventListener("click", function (){
@@ -746,7 +754,8 @@ function setTimestamps(eventId){
     submitTimestamp.innerText = "Submit timestamp."
     paragraph4.appendChild(submitTimestamp);
 
-    document.getElementById("recordOptions").appendChild(paragraph4);
+    divTimestampInputs.appendChild(paragraph4);
+    document.getElementById("recordOptions").appendChild(divTimestampInputs);
 
 }
 
@@ -930,6 +939,7 @@ function setClassificationsOptions(){
 
     let options = document.getElementById("classificationsOptions");
     options.innerHTML = "";
+    document.getElementById('classificationsOutput').innerHTML = "";
 
     $.get("/api/v1/getEvents", "", function (){}).done(function (data) {
 
@@ -957,32 +967,50 @@ function setClassificationsOptions(){
         let categories = ["Youth: 18 to 19 years old", "Senior: 20 to 34 years old",
             "Veteran 35: 35 to 39 years old", "Veteran 40: 40 to 49 years old",
             "Veteran 50: 50 to 59 years old", "Veteran 60+: 60 years old or more", "General"];
-        for (let i = 0; i<categories.length; i++){
+        for (let i = 0; i<categories.length-1; i++){
             let option = document.createElement("option");
             option.text = categories[i];
             option.value = (i).toString();
             competitiveCategorySelector.appendChild(option);
         }
+        let generalOption = document.createElement("option");
+        generalOption.text = categories[6]; // general category option is selected as default
+        generalOption.value = (6).toString(); //               \/ \/ \/ \/ \/
+        generalOption.setAttribute("selected", "selected");
+        competitiveCategorySelector.appendChild(generalOption);
+
         let genderSelector = document.createElement("select");
         genderSelector.setAttribute("id", "classificationsGenderSelector");
         let genders = ['Male', 'Female', 'General'];
-        for(let i = 0; i<genders.length; i++){
+        for(let i = 0; i<genders.length-1; i++){
             let option = document.createElement("option");
             option.text = genders[i];
             option.value = (i).toString();
             genderSelector.appendChild(option);
         }
+        let option = document.createElement("option");
+        option.text = genders[2]; //gender option "general" is selected as default option
+        option.value = (2).toString(); //               \/ \/ \/ \/ \/
+        option.setAttribute("selected", "selected");
+        genderSelector.appendChild(option);
+
 
         let stages = ['P1', 'P2', 'P3', 'Finish'];
         let stageSelector = document.createElement("select");
         stageSelector.setAttribute("id", "classificationsStageSelector");
 
-        for (let i = 0; i<stages.length; i++){
+        for (let i = 0; i<stages.length-1; i++){
             let option = document.createElement("option");
             option.text = stages[i];
             option.value = stages[i].toLowerCase();
             stageSelector.appendChild(option);
         }
+
+        let finishOption = document.createElement("option");
+        finishOption.text = stages[3];  //Finish is selected as default stage option
+        finishOption.value = stages[3].toLowerCase(); //   \/ \/ \/ \/ \/ \/ \/
+        finishOption.setAttribute("selected", "selected");
+        stageSelector.appendChild(finishOption);
 
         let button = document.createElement("button");
         button.innerText = "See classifications";
@@ -1049,15 +1077,13 @@ function calculateClassifications(){
                     break;
             }
 
-
             switch(stage){
 
-
                 case "p1":
-
                     for(let i = 0; i<competitors.length; i++){
                         if(competitors[i]['start']===null || competitors[i]['p1']===null){
                             competitors.splice(i,1);
+                            i--;
                         }
                         else{
                             let startDate = new Date(competitors[i]['start']);
@@ -1065,15 +1091,13 @@ function calculateClassifications(){
                             competitors[i]['finalTime'] = Math.abs(p1Date - startDate);
                         }
                     }
-
                     break;
 
-
                 case "p2":
-
                     for(let i = 0; i<competitors.length; i++){
                         if(competitors[i]['start']===null || competitors[i]['p2']===null){
                             competitors.splice(i,1);
+                            i--;
                         }
                         else{
                             let startDate = new Date(competitors[i]['start']);
@@ -1083,11 +1107,11 @@ function calculateClassifications(){
                     }
                     break;
 
-
                 case "p3":
                     for(let i = 0; i<competitors.length; i++){
                         if(competitors[i]['start']===null || competitors[i]['p3']===null){
                             competitors.splice(i,1);
+                            i--;
                         }
                         else{
                             let startDate = new Date(competitors[i]['start']);
@@ -1095,14 +1119,13 @@ function calculateClassifications(){
                             competitors[i]['finalTime'] = Math.abs(p3Date - startDate);
                         }
                     }
-
                     break;
 
                 case "finish":
-
                     for(let i = 0; i<competitors.length; i++){
                         if(competitors[i]['start']===null || competitors[i]['finish']===null){
                             competitors.splice(i,1);
+                            i--;
                         }
                         else{
                             let startDate = new Date(competitors[i]['start']);
@@ -1110,7 +1133,6 @@ function calculateClassifications(){
                             competitors[i]['finalTime'] = Math.abs(finishDate - startDate);
                         }
                     }
-
                     break;
             }
 
@@ -1121,36 +1143,38 @@ function calculateClassifications(){
 
             for(let i = 0; i<competitors.length; i++){
 
-                let hours = competitors[i]['finalTime']/3600000;
-                let minutes = 0;
-                let seconds = 0;
-                let milliseconds = 0;
-                if(hours>1){
-                    hours = hours - (hours%1);
-                    competitors[i]['finalTime']-= hours*3600000;
-                }
-                else hours = 0;
-                minutes = competitors[i]['finalTime']/60000;
-                if(minutes>1){
-                    minutes = minutes - (minutes%1);
-                    competitors[i]['finalTime']-= minutes*60000;
-                }
-                else minutes = 0;
-                seconds = competitors[i]['finalTime']/1000;
-                if(seconds>1){
-                    seconds = seconds - (seconds%1);
-                    competitors[i]['finalTime']-= seconds*1000;
-                }
-                else seconds = 0;
-                milliseconds =  competitors[i]['finalTime'];
-
                 let p = document.createElement("p");
 
                 $.get("/api/v1/getEnrollmentsByUsername",
-                    {username: competitors[i]['username']},function(data){
+                    {username: competitors[i]['username']},function(data) {
 
-                        p.innerText = `${i+1}º lugar: ${data[0]['name']}. 
-                    Tempo: ${hours} hours; ${minutes} min; ${seconds} sec; ${milliseconds} ms.`;
+                        let competitorName = data[0]['name'];
+
+                        let hours = competitors[i]['finalTime'] / 3600000;
+                        let minutes = 0;
+                        let seconds = 0;
+                        let milliseconds = 0;
+                        if (hours >= 1) {
+                            hours = hours - (hours % 1);
+                            competitors[i]['finalTime'] -= hours * 3600000;
+                        } else hours = 0;
+
+                        minutes = competitors[i]['finalTime'] / 60000;
+                        if (minutes >= 1) {
+                            minutes = minutes - (minutes % 1);
+                            competitors[i]['finalTime'] -= minutes * 60000;
+                        } else minutes = 0;
+
+                        seconds = competitors[i]['finalTime'] / 1000;
+                        if (seconds >= 1) {
+                            seconds = seconds - (seconds % 1);
+                            competitors[i]['finalTime'] -= seconds * 1000;
+                        } else seconds = 0;
+
+                        milliseconds = competitors[i]['finalTime'];
+
+                        p.innerText = `${i + 1}º place: ${competitorName}. 
+                    Time: ${hours} hours; ${minutes} min; ${seconds} sec; ${milliseconds} ms.`;
 
                     })
                 output.appendChild(p);
@@ -1162,8 +1186,6 @@ function calculateClassifications(){
     })
 
 }
-
-
 
 function collapseEventManagementUpdateOptions(sectionNotToBeCollapsed) {
 
