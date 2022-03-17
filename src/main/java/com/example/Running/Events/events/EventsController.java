@@ -62,6 +62,11 @@ public class EventsController {
         return eventService.searchEvent(pageNumber, searchInput);
     }
 
+    @GetMapping(path = "getEventById")
+    public Optional<Event> getEventById(@RequestParam Long eventId){
+        return eventService.getEventById(eventId);
+    }
+
     @GetMapping(path = "doesEventExists")
     public Boolean doesEventExists(@RequestParam String name){
         return eventService.doesEventExists(name);

@@ -35,10 +35,13 @@ public class EventService {
         return Optional.of(eventRepository.findAll());
     }
 
-
     public Page<Event> getEventsPageable(int pageNumber, int pageSize) {
         Pageable page = PageRequest.of(pageNumber, pageSize);
         return eventRepository.findByEventStatusOrderByEventStatusAscDateAsc(page);
+    }
+
+    public Optional<Event> getEventById(Long eventId){
+        return eventRepository.findById(eventId);
     }
 
     public Page<Event> searchEvent(int pageNumber, String searchInput){
@@ -105,7 +108,9 @@ public class EventService {
                 String currentWord = arrayOfWordsFromInput[i].toLowerCase();
                 if(eventDescription.contains(currentWord) || eventName.contains(currentWord))
                    {
-                    matchingEvents.add(events.get(j));
+                       if(!matchingEvents.contains(events.get(j))){
+                           matchingEvents.add(events.get(j));
+                       }
                    }
             }
         }

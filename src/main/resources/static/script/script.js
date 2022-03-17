@@ -9,6 +9,7 @@ $(function () { // Same as document.addEventListener("DOMContentLoaded"...
      });
      document.getElementById('classificationsButton').addEventListener("click", function () {
           displayAndHide('classifications');
+          setClassificationsOptions(-1);
      });
      document.getElementById('aboutButton').addEventListener("click", function () {
           displayAndHide('about');
@@ -39,12 +40,13 @@ $(function () { // Same as document.addEventListener("DOMContentLoaded"...
 })
 
 function displayAndHide(section){
-     const menuItems = ['home', 'classifications', 'about', 'signIn', 'signUp'];
+     const menuItems = ['home', 'classifications', 'about', 'signIn', 'signUp', 'competitors'];
      for(let i = 0; i<menuItems.length; i++){
           document.getElementById(menuItems[i]).style.display = "none";
      }
      document.getElementById(section).style.display = "inherit";
 }
+
 
 function displayPageOfEvents(url, pageNumber){
 
@@ -75,12 +77,9 @@ function displayPageOfEvents(url, pageNumber){
                    if(data['number']===i){
                         pageButton.className += ' active';
                    }
-                   if(pages[i]==="..."){
-                        pageButton.setAttribute("onclick", `displayPageOfEvents(\"${url}\",${i-1})`);
-                   }
-                   else{
-                        pageButton.setAttribute("onclick", `displayPageOfEvents(\"${url}\",${i})`);
-                   }
+
+                   pageButton.setAttribute("onclick", `displayPageOfEvents(\"${url}\",${i})`);
+
                    pageButton.innerText = pages[i].toString();
                    paginationMechanism.appendChild(pageButton);
               }
@@ -152,20 +151,20 @@ function displayPageOfEvents(url, pageNumber){
                         let firstButton = document.createElement("button");
                         let secondButton = document.createElement("button");
                         firstButton.setAttribute("class", "seeCompetitors");
-                        firstButton.setAttribute("onclick", `seeCompetitors(${events[i]['id']})`);
+                        firstButton.addEventListener("click", () => {seeCompetitors(events[i]['id'])});
                         firstButton.innerText = "See all the competitors!";
 
                         switch(events[i]['eventStatus']){
                              case "PAST": //classifications are only available for past events
                                   secondButton.setAttribute("class", "seeClassifications");
-                                  secondButton.setAttribute("onclick",`seeClassifications(${events[i]['id']})`);
+                                  secondButton.addEventListener("click", () => {seeClassifications(events[i]['id'])});
                                   secondButton.innerText = "See the classifications!";
                                   eventDiv.appendChild(firstButton);
                                   eventDiv.appendChild(secondButton);
                                   break;
                              default: //for current or present events, the "Enroll" button is available
                                   secondButton.setAttribute("class", "enrollButton");
-                                  secondButton.setAttribute("onclick",`enroll(${events[i]['id']})`);
+                                  secondButton.addEventListener("click", enroll);
                                   secondButton.innerText = "Enroll!";
                                   eventDiv.appendChild(firstButton);
                                   eventDiv.appendChild(secondButton);
@@ -183,23 +182,135 @@ function searchEvent() {
      displayPageOfEvents(`/api/v1/searchEvent?searchInput=${textInput}`, 0);
 }
 
-function enroll(eventId){
-     console.log(eventId);
+function enroll(){
+         window.alert("You must sign in to enroll!");
 }
 
 function seeClassifications(eventId){
-     console.log(eventId);
+     displayAndHide('classifications');
+     setClassificationsOptions(eventId);
+     setTimeout(calculateClassifications, 800, eventId);
 }
 
 function seeCompetitors(eventId){
-     console.log(eventId);
+
+          $.get("/api/v1/getEventById", {eventId: eventId}, function () {}).done(function(data){
+               let competitorsSection = document.querySelector('#competitors');
+               competitorsSection.innerHTML = "";
+
+               let eventName = document.createElement("h2");
+               eventName.innerText = data.name;
+               competitorsSection.appendChild(eventName);
+
+               let header = document.createElement("h3");
+               header.innerText = "List of competitors";
+               competitorsSection.appendChild(header);
+
+               let competitiveCategoryParagraph = document.createElement("p");
+               competitiveCategoryParagraph.innerText = "Select competitive category:";
+               competitiveCategoryParagraph.appendChild(document.createElement("br"));
+               let categorySelector = createCategorySelector();
+               categorySelector.setAttribute("id", "competitorsCategorySelector");
+               competitiveCategoryParagraph.appendChild(categorySelector);
+               competitorsSection.appendChild(competitiveCategoryParagraph);
+
+               let genderParagraph = document.createElement("p");
+               genderParagraph.innerText = "Select gender: "
+               let genderSelector = createGenderSelector();
+               genderSelector.setAttribute("id", "competitorsGenderSelector");
+               genderParagraph.appendChild(genderSelector);
+               competitorsSection.appendChild(genderParagraph);
+
+               let button = document.createElement("button");
+               button.setAttribute("id", "filterCompetitors");
+               button.innerText = "Filter competitors.";
+               button.addEventListener("click",() => {filterCompetitors(eventId)});
+               competitorsSection.appendChild(button);
+
+               let competitorsOutput = document.createElement("div");
+               competitorsOutput.setAttribute("id", "competitorsOutput");
+               competitorsSection.appendChild(competitorsOutput);
+               displayAndHide('competitors');
+          });
+}
+
+function filterCompetitors(eventId){
+
+     let categories = ['YOUTH', 'SENIOR', 'VETERAN_35', 'VETERAN_40', 'VETERAN_50', 'VETERAN_60'];
+     let genders = ['MALE', 'FEMALE'];
+
+     let competitorsOutput = document.querySelector('#competitorsOutput');
+     competitorsOutput.innerHTML = "";
+     let categorySelector = document.querySelector('#competitorsCategorySelector');
+     let genderSelector = document.querySelector('#competitorsGenderSelector');
+     let categoryIndex = categorySelector.options[categorySelector.selectedIndex].value;
+     let category = categoryIndex>5 ? "" : categories[categoryIndex];
+     let genderIndex = genderSelector.options[genderSelector.selectedIndex].value;
+     let gender = genderIndex>1 ? "" : genders[genderIndex];
+
+     $.ajax({
+          type: "POST",
+          url: "/api/v1/getEnrollmentsByEventId",
+          data: `${eventId}`,
+          headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+          }
+     }).done(function(data) {
+          let enrollments;
+          switch(true){
+               case !gender && !category:
+                    enrollments = data;
+                    break;
+               case !gender:
+                    enrollments = data.filter(e => e.competitiveCategory===category);
+                    break;
+               case !category:
+                    enrollments = data.filter(e => e.gender===gender);
+                    break;
+               default:
+                    enrollments = data.filter(e =>  e.competitiveCategory===category && e.gender===gender);
+                    break;
+          }
+
+          enrollments = enrollments.sort(sortByReversed("paid"));
+
+          let tableOfCompetitors = document.createElement("table");
+          tableOfCompetitors.setAttribute("id", "tableOfCompetitors");
+          let firstRow = document.createElement("tr");
+          let thName = document.createElement("th");
+          thName.innerText = "Name";
+          let thConfirmation = document.createElement("th");
+          thConfirmation.innerText = "Confirmation";
+          firstRow.appendChild(thName);
+          firstRow.appendChild(thConfirmation);
+          tableOfCompetitors.appendChild(firstRow);
+          enrollments.forEach( e => {
+               let row = document.createElement("tr");
+               let name = document.createElement("td");
+               let confirmation = document.createElement("td");
+               name.innerText = e.name;
+               if(e.paid===true){
+                   confirmation.innerText = "Confirmed"
+               }
+               else{
+                    confirmation.innerText = "Not confirmed"
+               }
+               row.appendChild(name);
+               row.appendChild(confirmation);
+               tableOfCompetitors.appendChild(row);
+          });
+
+          competitorsOutput.appendChild(tableOfCompetitors);
+
+     });
 }
 
 function getRange(start, end) {
      return Array(end - start + 1).fill().map((v,i) => i + start);
 }
 
-function pagination(current, length, delta = 3) {
+function pagination(current, length, delta = 4) {
      const range = {
           start: Math.round(current - delta / 2),
           end: Math.round(current + delta / 2)
@@ -229,7 +340,7 @@ function pagination(current, length, delta = 3) {
 }
 
 
-function setClassificationsOptions(){
+function setClassificationsOptions(eventId){
 
      let options = document.getElementById("classificationsOptions");
      options.innerHTML = "";
@@ -243,51 +354,37 @@ function setClassificationsOptions(){
           let eventSelector = document.createElement("select");
           eventSelector.setAttribute("id", "classificationsEventSelector");
 
-          let disabledOption = document.createElement("option");
-          disabledOption.text = "";
-          disabledOption.setAttribute("disabled", "disabled");
-          disabledOption.setAttribute("selected", "selected");
-          eventSelector.appendChild(disabledOption);
-
-          for(let i = 0; i<events.length; i++){
-               let option = document.createElement("option");
-               option.text = events[i]['name'];
-               option.value = events[i]['id'];
-               eventSelector.appendChild(option);
+          if(eventId>0){
+               for(let i = 0; i<events.length; i++){
+                    let option = document.createElement("option");
+                    option.text = events[i]['name'];
+                    option.value = events[i]['id'];
+                    if(events[i]['id']==eventId){
+                         option.setAttribute("selected", "selected");
+                    }
+                    eventSelector.appendChild(option);
+               }
+          }
+          else{
+               let disabledOption = document.createElement("option");
+               disabledOption.text = "";
+               disabledOption.setAttribute("disabled", "disabled");
+               disabledOption.setAttribute("selected", "selected");
+               eventSelector.appendChild(disabledOption);
+               for(let i = 0; i<events.length; i++){
+                    let option = document.createElement("option");
+                    option.text = events[i]['name'];
+                    option.value = events[i]['id'];
+                    eventSelector.appendChild(option);
+               }
           }
 
-          let competitiveCategorySelector = document.createElement("select");
+
+          let competitiveCategorySelector = createCategorySelector();
           competitiveCategorySelector.setAttribute("id", "classificationsCategorySelector");
-          let categories = ["Youth: 18 to 19 years old", "Senior: 20 to 34 years old",
-               "Veteran 35: 35 to 39 years old", "Veteran 40: 40 to 49 years old",
-               "Veteran 50: 50 to 59 years old", "Veteran 60+: 60 years old or more", "General"];
-          for (let i = 0; i<categories.length-1; i++){
-               let option = document.createElement("option");
-               option.text = categories[i];
-               option.value = (i).toString();
-               competitiveCategorySelector.appendChild(option);
-          }
-          let generalOption = document.createElement("option");
-          generalOption.text = categories[6]; // general category option is selected as default
-          generalOption.value = (6).toString(); //               \/ \/ \/ \/ \/
-          generalOption.setAttribute("selected", "selected");
-          competitiveCategorySelector.appendChild(generalOption);
 
-          let genderSelector = document.createElement("select");
+          let genderSelector = createGenderSelector();
           genderSelector.setAttribute("id", "classificationsGenderSelector");
-          let genders = ['Male', 'Female', 'General'];
-          for(let i = 0; i<genders.length-1; i++){
-               let option = document.createElement("option");
-               option.text = genders[i];
-               option.value = (i).toString();
-               genderSelector.appendChild(option);
-          }
-          let option = document.createElement("option");
-          option.text = genders[2]; //gender option "general" is selected as default option
-          option.value = (2).toString(); //               \/ \/ \/ \/ \/
-          option.setAttribute("selected", "selected");
-          genderSelector.appendChild(option);
-
 
           let stages = ['P1', 'P2', 'P3', 'Finish'];
           let stageSelector = document.createElement("select");
@@ -309,7 +406,7 @@ function setClassificationsOptions(){
           let button = document.createElement("button");
           button.innerText = "See classifications";
           button.addEventListener("click", function (){
-               calculateClassifications();
+               calculateClassifications(-1);
           });
 
           let p = document.createElement("p");
@@ -330,18 +427,62 @@ function setClassificationsOptions(){
      });
 }
 
-function calculateClassifications(){
+function createCategorySelector(){
+     let competitiveCategorySelector = document.createElement("select");
+     let categories = ["Youth: 18 to 19 years old", "Senior: 20 to 34 years old",
+          "Veteran 35: 35 to 39 years old", "Veteran 40: 40 to 49 years old",
+          "Veteran 50: 50 to 59 years old", "Veteran 60+: 60 years old or more", "General"];
+     for (let i = 0; i<categories.length-1; i++){
+          let option = document.createElement("option");
+          option.text = categories[i];
+          option.value = (i).toString();
+          competitiveCategorySelector.appendChild(option);
+     }
+     let generalOption = document.createElement("option");
+     generalOption.text = categories[6]; // general category option is selected as default
+     generalOption.value = (6).toString(); //               \/ \/ \/ \/ \/
+     generalOption.setAttribute("selected", "selected");
+     competitiveCategorySelector.appendChild(generalOption);
+     return competitiveCategorySelector;
+}
+
+function createGenderSelector(){
+     let genderSelector = document.createElement("select");
+     let genders = ['Male', 'Female', 'General'];
+     for(let i = 0; i<genders.length-1; i++){
+          let option = document.createElement("option");
+          option.text = genders[i];
+          option.value = (i).toString();
+          genderSelector.appendChild(option);
+     }
+     let option = document.createElement("option");
+     option.text = genders[2]; //gender option "general" is selected as default option
+     option.value = (2).toString(); //               \/ \/ \/ \/ \/
+     option.setAttribute("selected", "selected");
+     genderSelector.appendChild(option);
+     return genderSelector;
+}
+
+function calculateClassifications(event_id){
 
      let output = document.getElementById("classificationsOutput");
      output.innerHTML = "";
-     let eventSelector = document.getElementById('classificationsEventSelector');
-     let eventId = eventSelector.options[eventSelector.selectedIndex].value;
-     let categorySelector = document.getElementById('classificationsCategorySelector');
-     let category = categorySelector.options[categorySelector.selectedIndex].value;
-     let genderSelector = document.getElementById('classificationsGenderSelector');
-     let gender = genderSelector.options[genderSelector.selectedIndex].value;
-     let stageSelector = document.getElementById('classificationsStageSelector');
-     let stage = stageSelector.options[stageSelector.selectedIndex].value;
+     let eventId = event_id;
+     let category = 6;
+     let gender = 2;
+     let stage = 'finish';
+     if(event_id<0){
+          let eventSelector = document.getElementById('classificationsEventSelector');
+          eventId = eventSelector.options[eventSelector.selectedIndex].value;
+          let categorySelector = document.getElementById('classificationsCategorySelector');
+          category = categorySelector.options[categorySelector.selectedIndex].value;
+          let genderSelector = document.getElementById('classificationsGenderSelector');
+          gender = genderSelector.options[genderSelector.selectedIndex].value;
+          let stageSelector = document.getElementById('classificationsStageSelector');
+          stage = stageSelector.options[stageSelector.selectedIndex].value;
+     }
+
+
 
      let categories = ['YOUTH', 'SENIOR', 'VETERAN_35', 'VETERAN_40', 'VETERAN_50', 'VETERAN_60'];
      let genders = ['MALE', 'FEMALE'];
@@ -352,34 +493,33 @@ function calculateClassifications(){
           let competitors = [];
           if(data.length) {
 
-               switch(true){
-                    case gender==2 && category==6:
+               switch (true) {
+                    case gender == 2 && category == 6:
                          competitors = data;
                          break;
 
-                    case gender==2:
-                         competitors = data.filter( c => c.competitiveCategory===categories[category]);
+                    case gender == 2:
+                         competitors = data.filter(c => c.competitiveCategory === categories[category]);
                          break;
 
-                    case category==6:
-                         competitors = data.filter(c => c.gender===genders[gender]);
+                    case category == 6:
+                         competitors = data.filter(c => c.gender === genders[gender]);
                          break;
 
                     default:
-                         competitors = data.filter( c => c.competitiveCategory===categories[category] &&
-                             c.gender===genders[gender]);
+                         competitors = data.filter(c => c.competitiveCategory === categories[category] &&
+                             c.gender === genders[gender]);
                          break;
                }
 
-               switch(stage){
+               switch (stage) {
 
                     case "p1":
-                         for(let i = 0; i<competitors.length; i++){
-                              if(competitors[i]['start']===null || competitors[i]['p1']===null){
-                                   competitors.splice(i,1);
+                         for (let i = 0; i < competitors.length; i++) {
+                              if (competitors[i]['start'] === null || competitors[i]['p1'] === null) {
+                                   competitors.splice(i, 1);
                                    i--;
-                              }
-                              else{
+                              } else {
                                    let startDate = new Date(competitors[i]['start']);
                                    let p1Date = new Date(competitors[i]['p1']);
                                    competitors[i]['finalTime'] = Math.abs(p1Date - startDate);
@@ -388,12 +528,11 @@ function calculateClassifications(){
                          break;
 
                     case "p2":
-                         for(let i = 0; i<competitors.length; i++){
-                              if(competitors[i]['start']===null || competitors[i]['p2']===null){
-                                   competitors.splice(i,1);
+                         for (let i = 0; i < competitors.length; i++) {
+                              if (competitors[i]['start'] === null || competitors[i]['p2'] === null) {
+                                   competitors.splice(i, 1);
                                    i--;
-                              }
-                              else{
+                              } else {
                                    let startDate = new Date(competitors[i]['start']);
                                    let p2Date = new Date(competitors[i]['p2']);
                                    competitors[i]['finalTime'] = Math.abs(p2Date - startDate);
@@ -402,12 +541,11 @@ function calculateClassifications(){
                          break;
 
                     case "p3":
-                         for(let i = 0; i<competitors.length; i++){
-                              if(competitors[i]['start']===null || competitors[i]['p3']===null){
-                                   competitors.splice(i,1);
+                         for (let i = 0; i < competitors.length; i++) {
+                              if (competitors[i]['start'] === null || competitors[i]['p3'] === null) {
+                                   competitors.splice(i, 1);
                                    i--;
-                              }
-                              else{
+                              } else {
                                    let startDate = new Date(competitors[i]['start']);
                                    let p3Date = new Date(competitors[i]['p3']);
                                    competitors[i]['finalTime'] = Math.abs(p3Date - startDate);
@@ -416,12 +554,11 @@ function calculateClassifications(){
                          break;
 
                     case "finish":
-                         for(let i = 0; i<competitors.length; i++){
-                              if(competitors[i]['start']===null || competitors[i]['finish']===null){
-                                   competitors.splice(i,1);
+                         for (let i = 0; i < competitors.length; i++) {
+                              if (competitors[i]['start'] === null || competitors[i]['finish'] === null) {
+                                   competitors.splice(i, 1);
                                    i--;
-                              }
-                              else{
+                              } else {
                                    let startDate = new Date(competitors[i]['start']);
                                    let finishDate = new Date(competitors[i]['finish']);
                                    competitors[i]['finalTime'] = Math.abs(finishDate - startDate);
@@ -434,47 +571,108 @@ function calculateClassifications(){
                     return a.finalTime - b.finalTime;
                });
 
+               if (competitors.length>0) {
+                    output.appendChild(document.createElement("br"));
+                    for (let i = 0; i < competitors.length; i++) {
 
-               for(let i = 0; i<competitors.length; i++){
+                         let p = document.createElement("p");
 
-                    let p = document.createElement("p");
+                         $.get("/api/v1/getEnrollmentsByUsername",
+                             {username: competitors[i]['username']}, function (data) {
 
-                    $.get("/api/v1/getEnrollmentsByUsername",
-                        {username: competitors[i]['username']},function(data) {
+                                  let competitorName = data[0]['name'];
 
-                             let competitorName = data[0]['name'];
+                                  let hours = competitors[i]['finalTime'] / 3600000;
+                                  let minutes = 0;
+                                  let seconds = 0;
+                                  let milliseconds = 0;
+                                  if (hours >= 1) {
+                                       hours = hours - (hours % 1);
+                                       competitors[i]['finalTime'] -= hours * 3600000;
+                                  } else hours = 0;
 
-                             let hours = competitors[i]['finalTime'] / 3600000;
-                             let minutes = 0;
-                             let seconds = 0;
-                             let milliseconds = 0;
-                             if (hours >= 1) {
-                                  hours = hours - (hours % 1);
-                                  competitors[i]['finalTime'] -= hours * 3600000;
-                             } else hours = 0;
+                                  minutes = competitors[i]['finalTime'] / 60000;
+                                  if (minutes >= 1) {
+                                       minutes = minutes - (minutes % 1);
+                                       competitors[i]['finalTime'] -= minutes * 60000;
+                                  } else minutes = 0;
 
-                             minutes = competitors[i]['finalTime'] / 60000;
-                             if (minutes >= 1) {
-                                  minutes = minutes - (minutes % 1);
-                                  competitors[i]['finalTime'] -= minutes * 60000;
-                             } else minutes = 0;
+                                  seconds = competitors[i]['finalTime'] / 1000;
+                                  if (seconds >= 1) {
+                                       seconds = seconds - (seconds % 1);
+                                       competitors[i]['finalTime'] -= seconds * 1000;
+                                  } else seconds = 0;
 
-                             seconds = competitors[i]['finalTime'] / 1000;
-                             if (seconds >= 1) {
-                                  seconds = seconds - (seconds % 1);
-                                  competitors[i]['finalTime'] -= seconds * 1000;
-                             } else seconds = 0;
+                                  milliseconds = competitors[i]['finalTime'];
 
-                             milliseconds = competitors[i]['finalTime'];
-
-                             p.innerText = `${i + 1}º place: ${competitorName}. 
+                                  p.innerText = `${i + 1}º place: ${competitorName}. 
                     Time: ${hours} hours; ${minutes} min; ${seconds} sec; ${milliseconds} ms.`;
 
-                        })
+                             })
+                         output.appendChild(p);
+                    }
+               } else {
+                    let p = document.createElement("p");
+                    p.innerText = "There aren't classifications available.";
+                    output.appendChild(document.createElement("br"));
                     output.appendChild(p);
                }
+          }
+          else {
+               let p = document.createElement("p");
+               p.innerText = "There aren't classifications available.";
+               output.appendChild(document.createElement("br"));
+               output.appendChild(p);
           }
      })
 }
 
+function registerUser(){
+     let formData = new FormData(document.getElementById('registrationForm'));
+     let object = {};
+     formData.forEach((value, key) => {
+          // Reflect.has in favor of: object.hasOwnProperty(key)
+          if(!Reflect.has(object, key)){
+               object[key] = value;
+               return;
+          }
+          if(!Array.isArray(object[key])){
+               object[key] = [object[key]];
+          }
+          object[key].push(value);
+     });
+     let jsonObject = JSON.stringify(object);
+
+     fetch('/api/v1/registration', {
+          method: "POST",
+          body: jsonObject,
+          headers: {"Content-type": "application/json; charset=UTF-8"}
+     })
+         .then(response => response.json())
+         .then(json => console.log(json))
+         .catch(err => console.log(err));
+
+}
+
+function sortBy(prop) {
+     return function(a, b) {
+          if (a[prop] > b[prop]) {
+               return 1;
+          } else if (a[prop] < b[prop]) {
+               return -1;
+          }
+          return 0;
+     }
+}
+
+function sortByReversed(prop) {
+     return function(a, b) {
+          if (a[prop] < b[prop]) {
+               return 1;
+          } else if (a[prop] > b[prop]) {
+               return -1;
+          }
+          return 0;
+     }
+}
 

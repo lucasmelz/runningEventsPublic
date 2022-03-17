@@ -52,7 +52,7 @@
 </div>
 
 <div id = "classifications">
-    <h2>Classifications.</h2>
+    <h2>Classifications</h2>
     <div id = "classificationsOptions">
     </div>
     <div id = "classificationsOutput">
@@ -60,17 +60,71 @@
 </div>
 
 <div id = "about">
-    <h2>About the company.</h2>
+    <h2>About the company</h2>
     <p>This is a mockup website of a company that promotes and helps to organize running events,
         providing a web solution for event organizers. The website allows athletes to register and
         enroll for running, also maintaining a persistent database of their classifications and other
         statistics. Administrators can register new events and update the data concerning the athletes'
-        performance in each race. This platform is a RESTful Webapp implemented with the SpringBoot
-        framework, making use of JPA and a PostgreSQL database. It was developed by Lucas Werle Melz.</p>
+        performance in each race.</p> <br>
+    <p> This platform is a RESTful Webapp implemented with the SpringBoot
+        framework. The server-side layer makes use of Java for the business
+        logic and the database was built with PostgreSQL and Java Persistence
+        Architecture (JPA). The front-end consists in HTML, CSS and Javascript
+        (jQuery library is widely used for requests to the server).
+        It was developed by Lucas Werle Melz.</p>
 </div>
 
-<div id = "signIn"><h2>Sign in.</h2></div>
-<div id = "signUp"><h2>Sign up.</h2></div>
+<div id = "signIn">
+    <h2>Sign in</h2>
+    <form id="loginForm" class="standardForm" method="post" action="/login">
+        <p>
+            <label for="username">Username</label><br>
+            <input type="text" id="username" name="username"><br>
+        </p>
+        <p>
+            <label for="password" >Password</label><br>
+            <input type="password" id="password" name="password"><br>
+        </p><br>
+        <input id ="submitLogin" class="submitForm" type = "submit">
+    </form>
+
+</div>
+
+<div id = "signUp">
+    <h2>Sign up</h2>
+    <form class="standardForm" id = "registrationForm" onsubmit = "registerUser()">
+        <label for="firstName">Name:</label><br>
+        <input type="text" id="firstName" name="firstName"><br>
+        <label for="lastName">Last name:</label><br>
+        <input type="text" id="lastName" name="lastName"><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="passwordR" name="password"><br>
+        <label for="gender">Gender:</label><br>
+        <select name="gender" id="gender">
+            <option value=0>Male.</option>
+            <option value=1>Female.</option>
+        </select> <br>
+        <label for="competitiveCategory">Competitive Category:</label><br>
+        <select name="competitiveCategory" id="competitiveCategory">
+            <option value=0>Youth: 18 to 19 years old.</option>
+            <option value=1>Senior: 20 to 34 years old.</option>
+            <option value=2>Veteran 35: 35 to 39 years old.</option>
+            <option value=3>Veteran 40: 40 to 49 years old.</option>
+            <option value=4>Veteran 50: 50 to 59 years old.</option>
+            <option value=5>Veteran 60+: 60 years old or more.</option>
+        </select> <br>
+        <input class="submitForm" type = "submit">
+    </form>
+    <h4>You'll be emailed to confirm your account. You can't sign in until you confirm it.</h4>
+
+</div>
+
+<div id ='competitors'>
+
+</div>
+
 
 </body>
 </html>

@@ -90,12 +90,42 @@
             display:none;
         }
 
-        #signIn{
+        #signUp, #signIn{
             display:none;
+            width:290px;
+            margin:auto;
+            padding-left:50px;
         }
 
-        #signUp{
-            display:none;
+        #loginForm{
+            margin-left:10px;
+        }
+
+        #signUp h2{
+            margin-left:-40px;
+        }
+
+        #signIn h2{
+            margin-left:-36px;
+        }
+
+
+        #signUp h4{
+            margin-left:-45px;
+            margin-top:10px;
+        }
+
+        #signUp select{
+            margin-bottom:5px;
+        }
+
+        #signUp .submitForm{
+            margin-top:10px;
+            margin-left:60px;
+        }
+
+        #signIn .submitForm{
+            margin-left:62px;
         }
 
         #classificationsAdmin{
@@ -104,7 +134,16 @@
             margin: auto;
         }
 
-        #classificationsAdmin p{
+        #competitors{
+            display:none;
+        }
+
+        #classifications, #competitors{
+            width:290px;
+            margin: auto;
+        }
+
+        #classificationsAdmin p, #classifications p{
             width:100%;
             font-size:1.1em;
             text-align:center;
@@ -121,6 +160,40 @@
         #classificationsOptions button{
             margin-top: 5px;
         }
+
+        #competitors p{
+            font-size:1.2em;
+        }
+
+        #filterCompetitors{
+            width: 130px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-left: 73px;
+        }
+
+        table{
+            margin-top:10px;
+            margin-left:8px;
+        }
+
+        th{
+            text-align:left;
+        }
+
+        th, td{
+            padding-right:20px;
+        }
+
+        #competitorsCategorySelector{
+            width:240px;
+            margin-bottom:5px;
+        }
+
+        #competitorsGenderSelector{
+            width: 111px;
+        }
+
 
         #recordTimestamps{
             display:none;
@@ -184,7 +257,7 @@
         #searchInput{
             width: 235px;
             margin: 0 auto 8px;
-            padding-left:25px;
+            padding-left:20px;
         }
 
         #searchIcon{
@@ -205,7 +278,7 @@
         #searchTextBox{
             height:25px;
             margin-right:-4px;
-            margin-left:6px;
+            margin-left:13px;
         }
 
         /* Styling event cards and event container */
@@ -255,6 +328,10 @@
             height:20vh;
             width: auto;
             max-width: 28vh;
+        }
+
+        .eventInfo {
+            margin-top:5px;
         }
 
         /* Styling event management */
@@ -422,27 +499,59 @@
             margin-bottom:8px;
         }
 
+        @media (min-width:1857px){
 
-        @media (min-width:1186px){
+            h3{
+                font-size: 1.9em;
+            }
+
+            p{
+                font-size: 1.7em;
+            }
+
+            #eventsContainer button{
+                font-size: x-large;
+            }
+
+        }
+
+        @media (max-width:1856px){
+
+            .eventPic{
+                height:16vw;
+                max-width:20vw;
+                margin-top:-15px;
+            }
+
+            h3{
+                font-size: 1.7em;
+            }
+
+            p{
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width:1449px){
          .events{
              grid-template-rows: 1fr 2.8fr 3.2fr 1.5fr 1.5fr;
          }
 
             .eventPic{
-                height:22vh;
-                max-width:38vh;
+                height:19vw;
+                max-width:27vw;
                 margin-top:-13px;
             }
 
             h3{
-                font-size: 1.5em;
+                font-size: 1.4em;
             }
 
             p{
-                font-size: 1.3em;
+                font-size: 1.25em;
             }
             #eventsContainer {
-                grid-template-rows: repeat(2, minmax(23vw, 43vw));
+                grid-template-rows: repeat(2, minmax(23vw, 46vw));
             }
         }
 
@@ -454,8 +563,8 @@
             }
 
             .eventPic{
-                height:20vh;
-                max-width:34vh;
+                height:14vw;
+                max-width:19vw;
                 margin-top:-13px;
             }
 
@@ -468,19 +577,21 @@
             }
 
             #eventsContainer {
-                grid-template-rows: repeat(2, minmax(23vw, 50vw));
+                grid-template-rows: repeat(2, minmax(25vw, 56vw));
             }
         }
 
         @media (max-width:943px){
+
+
             .events{
                 grid-template-rows: 1fr 2.8fr 3.2fr 1.5fr 1.5fr;
             }
 
-            .eventPic {
-                height:20vh;
-                width: auto;
-                max-width: 28vh;
+            .eventPic{
+                height:18vw;
+                max-width:28vw;
+                margin-top:-13px;
             }
 
 
@@ -489,25 +600,24 @@
             }
 
             #eventsContainer {
-                grid-template-rows: repeat(2, minmax(35vw, 61vw));
+                grid-template-rows: repeat(2, minmax(35vw, 63vw));
             }
 
         }
 
         @media (max-width:811px){
-            #eventsContainer {
-                grid-template-columns: 85vw;
-                grid-template-rows: repeat(4, minmax(42vw, 70vw));
-            }
 
-            .events{
-                grid-template-rows: 1fr 3fr 3.25fr 1.375fr 1.375fr;
-            }
 
             .eventPic{
-                height:22vh;
-                max-width:40vh
+                height:20vw;
+                max-width:30vw;
+                margin-top:-13px;
             }
+
+            #eventsContainer {
+                grid-template-rows: repeat(2, minmax(25vw, 72vw));
+            }
+
 
             .seeCompetitors, .seeClassifications{
                 font-size:medium;
@@ -523,11 +633,21 @@
         }
 
 
-    @media (max-width:620px){
+    @media (max-width:674px){
+
+        .eventPic{
+            height:25vw;
+            max-width:36vw;
+            margin-top:-13px;
+        }
+
+        .events{
+            grid-template-rows: 1fr 3fr 3.25fr 1.375fr 1.375fr;
+        }
 
         #eventsContainer {
             grid-template-columns: 85vw;
-            grid-template-rows: repeat(4, minmax(50vw, 85vw));
+            grid-template-rows: repeat(4, minmax(42vw, 72vw));
         }
 
 
@@ -577,8 +697,9 @@
             }
 
             .eventPic{
-                height:18vh;
-                max-width:34vh
+                height:30vw;
+                max-width:40vw;
+                margin-top:-13px;
             }
 
 
@@ -603,14 +724,19 @@
 
         @media (max-width:420px) {
 
+            #paginationMechanism button {
+                padding: 6px 14px;
+                font-size: small;
+            }
+
             #eventsContainer {
                 grid-template-columns: 85vw;
                 grid-template-rows: repeat(4, minmax(70vw, 120vw));
             }
 
             .eventPic{
-                height:22vh;
-                max-width:34vh
+                height:36vw;
+                max-width:42vw;
             }
 
             .events{
@@ -633,6 +759,11 @@
 
 
         @media (max-width:367px) {
+
+            #paginationMechanism button {
+                padding: 5px 12px;
+                font-size: small;
+            }
 
             p{
                 font-size: small;
