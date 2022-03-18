@@ -14,17 +14,6 @@ import java.util.Optional;
 public class EventEnrollmentService {
     private EventEnrollmentRepository eventEnrollmentRepository;
 
-    public String enroll(EventEnrollmentRequest enrollment){
-        boolean eventExists = eventEnrollmentRepository.findByEventIdAndUsername(enrollment.getEventId(),
-                enrollment.getUsername()).isPresent();
-        if(eventExists){throw new IllegalStateException("You are already registered to this event.");}
-        EventEnrollment newEnrollment = new EventEnrollment(enrollment.getEventId(),
-                enrollment.getUsername(), enrollment.getPaymentReference(),
-                enrollment.getName(), enrollment.getGender(), enrollment.getCompetitiveCategory());
-        eventEnrollmentRepository.save(newEnrollment);
-        return "enrollment successful";
-    }
-
     public Optional<List<EventEnrollment>> findEventEnrollmentByEventId(Long eventId){
         return eventEnrollmentRepository.findEventEnrollmentByEventId(eventId);
     }

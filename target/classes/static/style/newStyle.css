@@ -90,6 +90,27 @@
             display:none;
         }
 
+        #myEnrollments, #enrollment{
+            display:none;
+            width:310px;
+            margin:auto;
+        }
+
+        #enrollmentDetails p{
+            margin-left:5px;
+            margin-right:5px;
+        }
+
+        #enrollment button{
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        #confirmEnrollment{
+            margin-left:25px;
+            margin-right:10px;
+        }
+
         #signUp, #signIn{
             display:none;
             width:290px;
@@ -174,7 +195,7 @@
 
         table{
             margin-top:10px;
-            margin-left:8px;
+            margin-left:11px;
         }
 
         th{

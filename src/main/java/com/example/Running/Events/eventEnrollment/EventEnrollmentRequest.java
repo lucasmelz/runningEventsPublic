@@ -15,7 +15,6 @@ import lombok.ToString;
 public class EventEnrollmentRequest {
     private Long eventId;
     private String username;
-    private Long paymentReference;
     private String name;
     private Gender gender;
     private CompetitiveCategory competitiveCategory;

@@ -2,6 +2,8 @@ package com.example.Running.Events.appuser;
 
 import com.example.Running.Events.eventEnrollment.EventEnrollment;
 import com.example.Running.Events.eventEnrollment.EventEnrollmentRequest;
+import com.example.Running.Events.events.Event;
+import com.example.Running.Events.events.EventRepository;
 import com.example.Running.Events.registration.token.ConfirmationToken;
 import com.example.Running.Events.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
@@ -25,6 +27,7 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final ConfirmationTokenService confirmationTokenService;
+    private final EventRepository eventRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -67,12 +70,15 @@ public class AppUserService implements UserDetailsService {
             throw new IllegalStateException("user not found!");
         }
 
-        EventEnrollment event = new EventEnrollment(enrollment.getEventId(),
-                enrollment.getUsername(), enrollment.getPaymentReference(),
+        Optional<Event> event = eventRepository.findById(enrollment.getEventId());
+        Long paymentReference = generatePaymentReference(event.get().getEnrollmentPrice());
+
+        EventEnrollment newEnrollment = new EventEnrollment(enrollment.getEventId(),
+                enrollment.getUsername(), paymentReference,
                 enrollment.getName(), enrollment.getGender(), enrollment.getCompetitiveCategory());
-        user.get().addEnrollment(event);
+        user.get().addEnrollment(newEnrollment);
         appUserRepository.save(user.get());
-        return ""+ enrollment.getUsername() + " successfully enrolled in event id " + enrollment.getEventId();
+        return ""+paymentReference;
     }
 
     public boolean isUserEnrolled(Long eventId, String username) {
@@ -93,5 +99,13 @@ public class AppUserService implements UserDetailsService {
 
     public Optional<List<EventEnrollment>> getEnrollmentsByUsername (String username){
         return appUserRepository.getEventEnrollmentListByUsername(username);
+    }
+
+    private Long generatePaymentReference(Float enrollmentPrice){
+        return Long.parseLong("" + (int)(Math.floor(Math.random()*(9)+0)) + "" + (int)(Math.floor(Math.random()*(9)+0)) + ""
+                + (int)(Math.floor(Math.random()*(9)+0)) + "" + (int)(Math.floor(Math.random()*(9)+0)) + ""
+                + (int)(Math.floor(Math.random()*(9)+0)) + ""+ (int)(Math.floor(Math.random()*(9)+0)) + ""
+                + (int)(Math.floor(Math.random()*(9)+0)) + ""+ (int)(Math.floor(Math.random()*(9)+0)) + ""
+                + (int)(Math.floor(Math.random()*(9)+0)));
     }
 }

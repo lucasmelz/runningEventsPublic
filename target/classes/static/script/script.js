@@ -258,51 +258,62 @@ function filterCompetitors(eventId){
           }
      }).done(function(data) {
           let enrollments;
-          switch(true){
-               case !gender && !category:
-                    enrollments = data;
-                    break;
-               case !gender:
-                    enrollments = data.filter(e => e.competitiveCategory===category);
-                    break;
-               case !category:
-                    enrollments = data.filter(e => e.gender===gender);
-                    break;
-               default:
-                    enrollments = data.filter(e =>  e.competitiveCategory===category && e.gender===gender);
-                    break;
-          }
-
-          enrollments = enrollments.sort(sortByReversed("paid"));
-
-          let tableOfCompetitors = document.createElement("table");
-          tableOfCompetitors.setAttribute("id", "tableOfCompetitors");
-          let firstRow = document.createElement("tr");
-          let thName = document.createElement("th");
-          thName.innerText = "Name";
-          let thConfirmation = document.createElement("th");
-          thConfirmation.innerText = "Confirmation";
-          firstRow.appendChild(thName);
-          firstRow.appendChild(thConfirmation);
-          tableOfCompetitors.appendChild(firstRow);
-          enrollments.forEach( e => {
-               let row = document.createElement("tr");
-               let name = document.createElement("td");
-               let confirmation = document.createElement("td");
-               name.innerText = e.name;
-               if(e.paid===true){
-                   confirmation.innerText = "Confirmed"
+          if(data.length){
+               switch(true){
+                    case !gender && !category:
+                         enrollments = data;
+                         break;
+                    case !gender:
+                         enrollments = data.filter(e => e.competitiveCategory===category);
+                         break;
+                    case !category:
+                         enrollments = data.filter(e => e.gender===gender);
+                         break;
+                    default:
+                         enrollments = data.filter(e =>  e.competitiveCategory===category && e.gender===gender);
+                         break;
+               }
+               if(!enrollments.length){
+                    let noCompetitorsWarning = document.createElement("h3");
+                    noCompetitorsWarning.innerText = "No competitors were found.";
+                    competitorsOutput.appendChild(noCompetitorsWarning);
                }
                else{
-                    confirmation.innerText = "Not confirmed"
+                    enrollments = enrollments.sort(sortByReversed("paid"));
+
+                    let tableOfCompetitors = document.createElement("table");
+                    tableOfCompetitors.setAttribute("id", "tableOfCompetitors");
+                    let firstRow = document.createElement("tr");
+                    let thName = document.createElement("th");
+                    thName.innerText = "Name";
+                    let thConfirmation = document.createElement("th");
+                    thConfirmation.innerText = "Confirmation";
+                    firstRow.appendChild(thName);
+                    firstRow.appendChild(thConfirmation);
+                    tableOfCompetitors.appendChild(firstRow);
+                    enrollments.forEach( e => {
+                         let row = document.createElement("tr");
+                         let name = document.createElement("td");
+                         let confirmation = document.createElement("td");
+                         name.innerText = e.name;
+                         if(e.paid===true){
+                              confirmation.innerText = "Confirmed"
+                         }
+                         else{
+                              confirmation.innerText = "Not confirmed"
+                         }
+                         row.appendChild(name);
+                         row.appendChild(confirmation);
+                         tableOfCompetitors.appendChild(row);
+                    });
+                    competitorsOutput.appendChild(tableOfCompetitors);
                }
-               row.appendChild(name);
-               row.appendChild(confirmation);
-               tableOfCompetitors.appendChild(row);
-          });
-
-          competitorsOutput.appendChild(tableOfCompetitors);
-
+          }
+          else{
+               let noCompetitorsWarning = document.createElement("h3");
+               noCompetitorsWarning.innerText = "No competitors were found.";
+               competitorsOutput.appendChild(noCompetitorsWarning);
+          }
      });
 }
 
