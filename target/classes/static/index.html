@@ -4,108 +4,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
     <title>Running Events</title>
+    <link rel="stylesheet" href="style/newStyle.css">
+    <link rel="icon" type="image/x-icon" href="images/sport.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="script/myscript.js"></script>
-    <link rel="stylesheet" href="style/style.css">
+    <script src="script/script.js"></script>
 </head>
 
 <body>
-    
-    <div id='header'>
-        <div class = 'navBar'>
-            <img src='images/sport.png' alt="logo" id="logo"><img>
-            <a href="#home" id='homeButton' onclick="displayEvents()">RunningEvents</a>
-            <a href="#homeSmall" id='homeSmallButton' onclick="displayEvents()">Home</a>
-            <a href="#classifications_" onclick="displayClassifications()">Classifications</a>
-            <a href="#aboutUs" id = 'aboutButton' onclick="displayAbout()">About the Company </a>
-            <a href= "#aboutSmall" id = 'aboutSmallButton' onclick="displayAbout()">About</a>
-            <a href="#signIn_" id = "signInButton" onclick="displaySignIn()">Sign in</a>
-            <a href= "#signUp_" id = "signUpButton" onclick="displaySignUp()">Sign up</a>
-            <a href="#admin" id='adminLink' onclick="displaySignIn()">Admin</a>
+<div id='header'>
+    <div class = 'navBar'>
+        <button id='homeButton'>RunningEvents</button>
+        <button id='homeSmallButton'>Home</button>
+        <button id='classificationsButton'>Classifications</button>
+        <button id='aboutButton'>About the Company</button>
+        <button id='aboutSmallButton'>About</button>
+        <button id='signInButton'>Sign in</button>
+        <button id='signUpButton'>Sign up</button>
+        <button id='adminButton'>Admin</button>
+    </div>
+</div>
+<img src='images/sport.png' alt="logo" id="logo"><img>
+
+<div id = "home">
+    <div id="searchInput">
+        <input type="text" id="searchTextBox">
+        <img src="images/search.png" alt="search" id="searchIcon"><img>
+    </div>
+    <div id = "paginationMechanism"></div>
+    <div id="notFoundAnyEvents"></div>
+    <div id ="eventsContainer">
+
+       <!-- <div class = 'events' id="event1">
+            <h3>Event title.</h3>
+            <div class = "imageWrapper">
+            <img src ='images/sport.png' class="eventPic">
         </div>
+            <div class = 'eventInfo'>
+                <p>Evento de corrida disputado anualmente e muito frequentado
+                    por pessoas de todas as idades e lugares do mundo. Venha correr
+                    você também!</p>
+                <p>Data: 22/10/2022</p>
+                <p>Preço: 5$.</p>
+            </div>
+            <button class = 'seeCompetitors'>See all competitors!</button>
+            <button class = 'seeClassifications'>See the classifications!</button>
+        </div>-->
     </div>
+</div>
 
-        <div id = "searchEvent">
-            <form id="searchingEvent">
-                <label id="searchLabel">Name or date of event:</label>
-                <br>
-                <input type="text" name="nome" id="eventInput">
-                <br>
-                <input type="button" value='submit' id='submitEvent' onclick="searchSpecificEvent()">
-            </form>
-        </div>
-
-
-    <div id = "searchResults">
+<div id = "classifications">
+    <h2>Classifications</h2>
+    <div id = "classificationsOptions">
     </div>
-
-    <div id = "eventsList">
+    <div id = "classificationsOutput">
     </div>
+</div>
 
-    <div id = "classifications">
-    </div>
+<div id = "about">
+    <h2>About the company</h2>
+    <p>This is a mockup website of a company that promotes and helps to organize running events,
+        providing a web solution for event organizers. The website allows athletes to register and
+        enroll for running, also maintaining a persistent database of their classifications and other
+        statistics. Administrators can register new events and update the data concerning the athletes'
+        performance in each race.</p> <br>
+    <p> This platform is a RESTful Webapp implemented with the SpringBoot
+        framework. The server-side layer makes use of Java for the business
+        logic and the database was built with PostgreSQL and Java Persistence
+        Architecture (JPA). The front-end consists in HTML, CSS and Javascript
+        (jQuery library is widely used for requests to the server).
+        It was developed by Lucas Werle Melz.</p>
+</div>
 
-    <div id = "about">
-        <h2>About the company</h2>
-        <h5>This is a mockup website of a company that promotes and helps to organize running events,
-            providing a web solution for event organizers. The website allows athletes to register and
-            enroll for running, also maintaining a persistent database of their classifications and other
-            statistics. Administrators can register new events and update the data concerning the athletes'
-            performance in each race. Developed by Lucas Werle Melz (44224).</h5>
-    </div>
+<div id = "signIn">
+    <h2>Sign in</h2>
+    <form id="loginForm" class="standardForm" method="post" action="/login">
+        <p>
+            <label for="username">Username</label><br>
+            <input type="text" id="username" name="username"><br>
+        </p>
+        <p>
+            <label for="password" >Password</label><br>
+            <input type="password" id="password" name="password"><br>
+        </p><br>
+        <input id ="submitLogin" class="submitForm" type = "submit">
+    </form>
 
-    <div id = "signIn">
+</div>
 
-        <form id="loginForm" class="standardForm" method="post" action="/login">
-            <h3 id= "loginTitle">Sign in</h3>
-            <p>
-                <label for="username">Username</label><br>
-                <input type="text" id="username" name="username"><br>
-            </p>
-            <p>
-                <label for="password" >Password</label><br>
-                <input type="password" id="password" name="password"><br>
-            </p><br>
-            <input id ="submitLogin" class="submitForm" type = "submit">
-        </form>
+<div id = "signUp">
+    <h2>Sign up</h2>
+    <form class="standardForm" id = "registrationForm" onsubmit = "registerUser()">
+        <label for="firstName">Name:</label><br>
+        <input type="text" id="firstName" name="firstName"><br>
+        <label for="lastName">Last name:</label><br>
+        <input type="text" id="lastName" name="lastName"><br>
+        <label for="email">Email:</label><br>
+        <input type="text" id="email" name="email"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="passwordR" name="password"><br>
+        <label for="gender">Gender:</label><br>
+        <select name="gender" id="gender">
+            <option value=0>Male.</option>
+            <option value=1>Female.</option>
+        </select> <br>
+        <label for="competitiveCategory">Competitive Category:</label><br>
+        <select name="competitiveCategory" id="competitiveCategory">
+            <option value=0>Youth: 18 to 19 years old.</option>
+            <option value=1>Senior: 20 to 34 years old.</option>
+            <option value=2>Veteran 35: 35 to 39 years old.</option>
+            <option value=3>Veteran 40: 40 to 49 years old.</option>
+            <option value=4>Veteran 50: 50 to 59 years old.</option>
+            <option value=5>Veteran 60+: 60 years old or more.</option>
+        </select> <br>
+        <input class="submitForm" type = "submit">
+    </form>
+    <h4>You'll be emailed to confirm your account. You can't sign in until you confirm it.</h4>
 
+</div>
 
-    </div>
+<div id ='competitors'>
 
-    <div id = "signUp">
-        <form class="standardForm" id = "registrationForm" onsubmit = "registerUser()">
-            <h3 class = 'formTitle'>Registration</h3>
-            <label for="firstName">Name:</label><br>
-            <input type="text" id="firstName" name="firstName"><br>
-            <label for="lastName">Last name:</label><br>
-            <input type="text" id="lastName" name="lastName"><br>
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="passwordR" name="password"><br>
-            <label for="gender">Gender:</label><br>
-            <select name="gender" id="gender">
-                <option value=0>Male.</option>
-                <option value=1>Female.</option>
-            </select> <br>
-            <label for="competitiveCategory">Competitive Category:</label><br>
-            <select name="competitiveCategory" id="competitiveCategory">
-                <option value=0>Youth: 18 to 19 years old.</option>
-                <option value=1>Senior: 20 to 34 years old.</option>
-                <option value=2>Veteran 35: 35 to 39 years old.</option>
-                <option value=3>Veteran 40: 40 to 49 years old.</option>
-                <option value=4>Veteran 50: 50 to 59 years old.</option>
-                <option value=5>Veteran 60+: 60 years old or more.</option>
-            </select> <br>
-            <input class="submitForm" type = "submit">
-        </form>
-
-    </div>
-
-
-    <div id = "listOfCompetitors">
-
-    </div>
+</div>
 
 
 </body>

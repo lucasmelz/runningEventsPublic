@@ -7,7 +7,6 @@ com/example/Running/Events/eventEnrollment/EventEnrollmentRequest.class
 com/example/Running/Events/timeStamps/NewTimeStampRequest$NewTimeStampRequestBuilder.class
 com/example/Running/Events/appuser/AppUserRepository.class
 com/example/Running/Events/RunningEventsApplication.class
-com/example/Running/Events/timeStamps/FinalTime.class
 com/example/Running/Events/events/EventsController.class
 com/example/Running/Events/events/EventRegistrationRequest.class
 com/example/Running/Events/eventEnrollment/EventEnrollmentController.class

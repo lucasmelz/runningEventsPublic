@@ -35,4 +35,9 @@ public class EventEnrollmentController {
         return eventEnrollmentService.findEventEnrollmentByEventId(eventId);
     }
 
+    @PostMapping(path = "confirmEnrollmentPayment")
+    public void confirmEnrollmentPayment(Long enrollmentId){
+        eventEnrollmentService.confirmPayment(enrollmentId);
+    }
+
 }

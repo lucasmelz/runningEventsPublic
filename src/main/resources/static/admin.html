@@ -3,80 +3,75 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8">
-    <title>Running Events Admin Interface</title>
+    <title>Running Events</title>
+    <link rel="stylesheet" href="style/newStyle.css">
+    <link rel="icon" type="image/x-icon" href="images/sport.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script/adminScript.js"></script>
-    <link rel="stylesheet" href="style/style.css">
 </head>
-
+<!--Classifications, register new event, register event, record timestamps, logout -->
 <body>
 <div id='header'>
-    <div class = 'navBar'>
-        <img src='images/sport.png' alt="logo" id="logo"><img>
-        <a href="#seeClassifications_" id='seeClassificationsButton' onclick="displayClassif()">Classifications</a>
-        <a href="#registerNewEvent_" id='registerEvent' onclick="displayRegisterEvent()">Register new event</a>
-        <a href="#registerNewEventSmall_" id='registerEventSmall' onclick="displayRegisterEvent()">Register event</a>
+    <div class = 'navBar adminNavBar'>
+        <button id='classificationsButton'>Classifications</button>
+        <button id='eventManagementButton'>Event management</button>
+        <button id='recordTimestampsButton'>Record timestamps</button>
+        <button id='logoutButton'>Logout</button>
+    </div>
+</div>
+<img src='images/sport.png' alt="logo" id="logo"><img>
 
-        <a href="#recordTimeStamps_" id = 'recordTimeStampsButton' onclick="displayRecordTimeStamps()">Record timestamps</a>
-        <a href= "/logout" id = "logoutButton">Logout</a>
+<div id = "classificationsAdmin">
+    <h2>Classifications.</h2>
+    <div id = "classificationsOptions">
+    </div>
+    <div id = "classificationsOutput">
     </div>
 </div>
 
-<div id = "searchEvent" class="searchAdmin">
-    <form id="searchingEvent">
-        <label id="searchLabel">Name or date of event:</label>
-        <br>
-        <input type="text" name="nome" id="eventInput">
-        <br>
-        <input type="button" value='submit' id='submitEvent' onclick="searchSpecificEvent()">
-    </form>
-</div>
-
-<div id="classificationsAdmin">
-</div>
-<div id="registerEventSection">
-    <h2>Register new event</h2>
-
-    <form class="standardForm" id = "registerEventForm">
-        <label for="name">Name:</label><br>
-        <input type="text" id="eventNameForm" name="name"><br>
-        <label for="description">Description:</label><br>
-        <input type="text" id="descriptionForm" name="description"><br>
-        <label for="enrollmentPrice" id="enrollmentLabel">Enrollment price:</label><br>
-        <input type="text" id="enrollmentPriceForm" name="enrollmentPrice"><br>
-        <label for="day">Day:</label><br>
-        <input type="text" id="dayForm" name="day"><br>
-        <label for="month">Month:</label><br>
-        <input type="text" id="monthForm" name="month"><br>
-        <label for="year">Year:</label><br>
-        <input type="text" id="yearForm" name="year"><br>
-        <label for="hour">Hour:</label><br>
-        <input type="text" id="hourForm" name="hour"><br>
-        <label for="min">Minutes:</label><br>
-        <input type="text" id="minForm"  name="min"><br>
-        <button class="submitForm" type="button" id="submitRegisterEvent" onclick="registerNewEvent()">Register event.</button>
-    </form>
-
-    <div id="registerEventOutput">
-
+<div id = "eventManagement">
+    <h2>Event management</h2>
+    <h3>Do you want to create a new event or update the information about an event?</h3>
+    <div id = "mngButtons">
+        <button class="eventMngButton" id="createNewEventButton">Create new event.</button>
+        <button class="eventMngButton" id="updateEventInfoButton">Update information.</button>
     </div>
-
+    <div id = "registerEventContainer">
+        <form class="standardForm" id = "registerEventForm">
+            <label>Name:</label><br>
+            <input type="text" id="eventNameForm" name="name"><br>
+            <label>Description:</label><br>
+            <textarea rows="3" cols="40" id="descriptionForm" name="description"></textarea><br>
+            <label>Day:</label>
+            <input type="text" id="dayForm" name="day">
+            <label>Month:</label>
+            <input type="text" id="monthForm" name="month">
+            <label>Year:</label>
+            <input type="text" id="yearForm" name="year"><br>
+            <label>Hour:</label>
+            <input type="text" id="hourForm" name="hour">
+            <label id="minutesLabel">Minutes:</label>
+            <input type="text" id="minForm"name="min"><br>
+            <label id="enrollmentLabel">Enrollment price:</label>
+            <input type="text" id="enrollmentPriceForm" name="enrollmentPrice"><br>
+            <label>Event presentation image:</label><br>
+            <input type="file" name="file" id="imageFile"> <br>
+            <button class="submitForm" type="button" id="submitRegisterEvent">Register event.</button>
+        </form>
+        <div id="registerEventOutput">
+        </div>
+    </div>
+    <div id="updateEventInfoContainer">
+    </div>
 </div>
 
-
-<div id="recordTimeStamps">
+<div id = "recordTimestamps">
     <h2>Record Timestamps</h2>
-    <p id="rtInstructions">Click in the name of event to record new timestamps.<br>
-    You can also use the search mechanism above.</p>
+    <div id="selectEventToRecordTSContainer">
+    </div>
+    <div id="recordOptions">
+    </div>
 </div>
-<div id="allEvents">
-
-</div>
-
-<div id="results">
-</div>
-
-
 
 </body>
 </html>

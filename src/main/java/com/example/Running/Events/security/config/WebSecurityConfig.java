@@ -54,13 +54,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               .antMatchers("/api/v1/isUserEnrolled")
                  .hasAnyRole("ADMIN", "USER")
               .antMatchers("/api/v1/enrollEventUser")
-            .permitAll()
-//                  .hasAnyRole("ADMIN", "USER")
+                 .hasAnyRole("ADMIN", "USER")
+            .antMatchers("/api/v1/confirmEnrollmentPayment")
+                 .hasAnyRole("ADMIN", "USER")
             .antMatchers("/api/v1/admin/**")
                   .hasRole("ADMIN")
             .antMatchers("/admin.html")
                   .hasRole("ADMIN")
             .antMatchers("/api/v1/registerEvent")
+                  .hasRole("ADMIN")
+            .antMatchers("/api/v1/updateName")
+                  .hasRole("ADMIN")
+            .antMatchers("/api/v1/updateDescription")
+                  .hasRole("ADMIN")
+            .antMatchers("/api/v1/updateDate")
+                  .hasRole("ADMIN")
+            .antMatchers("/api/v1/updatePrice")
+                  .hasRole("ADMIN")
+            .antMatchers("/api/v1/updateImage")
                   .hasRole("ADMIN")
                 .and().formLogin().successHandler(securityHandler)
             .and().logout()
@@ -82,6 +93,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setUserDetailsService(appUserService);
         return provider;
     }
-
 
 }

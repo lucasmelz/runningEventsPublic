@@ -19,6 +19,11 @@ $(function () { // Same as document.addEventListener("DOMContentLoaded"...
     });
     document.getElementById('myEnrollmentsButton').addEventListener("click", function () {
         displayAndHide('myEnrollments');
+        setMyEnrollments();
+    });
+
+    document.getElementById('logoutButton').addEventListener("click", ()=>{
+        window.location.replace("/logout");
     });
 
     document.getElementById('searchIcon').addEventListener("click", function(){
@@ -285,12 +290,87 @@ function confirmEnrollment(eventId){
                                 "<b>Payment reference: </b>" + paymentReference;
                             document.getElementById("enrollmentOutput").appendChild(enrollmentConfirmation);
 
-                        });
+                        })
 
                     })
             }
-        });
+        })
     })
+}
+
+function setMyEnrollments(){
+    $.get("/api/v1/username", "", () => {})
+        .done(function (data) {
+            let username = data;
+            $.get("/api/v1/getEnrollmentsByUsername", {username: username}, () => {})
+                .done(function (data) {
+                    let enrollments = data;
+                    for(let i = 0; i<enrollments.length; i++){
+                        $.get("/api/v1/getEventById", {eventId: enrollments[i].eventId},  () => {})
+                            .done(function(data){
+
+                                let enrollmentDiv = document.createElement("div");
+
+                                let eventName = document.createElement("h3");
+                                eventName.innerText = data.name;
+
+                                let competitiveCategory = document.createElement("p");
+                                competitiveCategory.innerText = "Competitive category: " +  enrollments[i].competitiveCategory;
+
+                                let date = document.createElement("p");
+                                let eventDate = new Date(data.date);
+                                date.innerText = "Date: " + eventDate.toUTCString().substring(0,eventDate.toUTCString().length-7);
+
+                                let price = document.createElement("p");
+                                price.innerText = "Enrollment price: " + data.enrollmentPrice + "€";
+
+                                let paymentEntity = document.createElement("p");
+                                paymentEntity.innerText = "Payment entity: 12543";
+
+                                let paymentReference = document.createElement("p");
+                                paymentReference.innerText = "Payment reference: " + enrollments[i].paymentReference;
+
+                                enrollmentDiv.appendChild(eventName);
+                                enrollmentDiv.appendChild(competitiveCategory);
+                                enrollmentDiv.appendChild(date);
+                                enrollmentDiv.appendChild(price);
+                                enrollmentDiv.appendChild(paymentEntity);
+                                enrollmentDiv.appendChild(paymentReference);
+
+                                let paid = document.createElement("p");
+                                if(enrollments[i].paid){
+                                    paid.innerText = "Payment: confirmed"
+                                    enrollmentDiv.appendChild(paid);
+                                }
+                                else{
+                                    paid.innerText = "Payment: not confirmed"
+                                    paid.setAttribute("id", `paid${enrollments[i].enrollmentId}`);
+                                    let confirmPayment = document.createElement("button");
+                                    confirmPayment.setAttribute("id", `button${enrollments[i].enrollmentId}`);
+                                    confirmPayment.addEventListener("click", () => {
+                                        paymentConfirmed(enrollments[i].enrollmentId);
+                                    });
+                                    confirmPayment.innerText = "Confirm payment"
+                                    enrollmentDiv.appendChild(paid);
+                                    enrollmentDiv.appendChild(confirmPayment);
+                                }
+                                document.querySelector("#allEnrollments").appendChild(enrollmentDiv);
+                            })
+                    }
+                })
+        })
+}
+
+function paymentConfirmed(enrollmentId){
+    $.post("api/v1/confirmEnrollmentPayment", {enrollmentId: enrollmentId}, ()=>{})
+        .done( () => {
+            let paragraphId = "#paid" + enrollmentId;
+            let paragraphPaidOrNot = document.querySelector(paragraphId);
+            let buttonId = "#button" + enrollmentId;
+            let buttonConfirmPayment = document.querySelector(buttonId);
+            paragraphPaidOrNot.innerText = "Payment: confirmed";
+            buttonConfirmPayment.remove();
+        });
 }
 
 function seeClassifications(eventId){

@@ -1,40 +1,39 @@
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/registration/RegistrationController.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/registration/RegistrationRequest.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/events/Event.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/Gender.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/IsUserEnrolledRequest.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/timeStamps/TimeStampController.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/RunningEventsApplication.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/timeStamps/FinalTime.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/timeStamps/TimeStampRepository.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/events/EventService.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/events/EventsController.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/AppUserController.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentService.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/registration/token/ConfirmationTokenRepository.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollment.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/registration/EmailValidator.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentRepository.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/security/PasswordEncoder.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/timeStamps/TimeStampService.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/events/EventRepository.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/security/SecurityController.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/timeStamps/TimeStamp.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/registration/token/ConfirmationToken.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/AppUserRole.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/events/EventStatus.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/timeStamps/NewTimeStampRequest.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/AppUserRepository.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/events/EventRegistrationRequest.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/registration/token/ConfirmationTokenService.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/registration/RegistrationService.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentController.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/email/EmailService.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/AppUser.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentRequest.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/AppUserService.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/security/config/WebSecurityConfig.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/email/EmailSender.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/timeStamps/TimeStampRequest.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/appuser/CompetitiveCategory.java
-/home/citizen/Desktop/44224 - Trabalho 2/src/main/java/com/example/Running/Events/security/config/SecurityHandler.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/RunningEventsApplication.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/events/Event.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollment.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/timeStamps/TimeStampController.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/email/EmailService.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/registration/RegistrationService.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentRepository.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/timeStamps/TimeStampRepository.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentRequest.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/timeStamps/NewTimeStampRequest.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/security/SecurityController.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/IsUserEnrolledRequest.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/AppUserService.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentController.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/timeStamps/TimeStampService.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/timeStamps/TimeStamp.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/AppUser.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/events/EventsController.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/security/PasswordEncoder.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/registration/token/ConfirmationTokenService.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/registration/EmailValidator.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/registration/RegistrationController.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/events/EventService.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/events/EventStatus.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/registration/token/ConfirmationTokenRepository.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/registration/RegistrationRequest.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/security/config/WebSecurityConfig.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/email/EmailSender.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/registration/token/ConfirmationToken.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/security/config/SecurityHandler.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/AppUserController.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/events/EventRegistrationRequest.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/AppUserRepository.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/Gender.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/events/EventRepository.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/AppUserRole.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/timeStamps/TimeStampRequest.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/eventEnrollment/EventEnrollmentService.java
+/home/citizen/Documents/Development/runningEvents/src/main/java/com/example/Running/Events/appuser/CompetitiveCategory.java

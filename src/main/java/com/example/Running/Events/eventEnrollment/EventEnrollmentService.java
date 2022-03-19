@@ -18,4 +18,15 @@ public class EventEnrollmentService {
         return eventEnrollmentRepository.findEventEnrollmentByEventId(eventId);
     }
 
+    public void confirmPayment (Long eventEnrollmentId){
+        Optional<EventEnrollment> enrollment = eventEnrollmentRepository.findEventEnrollmentByEnrollmentId(eventEnrollmentId);
+        if(!enrollment.isPresent()){
+            throw new IllegalStateException("there isn't an enrollment with this id");
+        }
+        else{
+            enrollment.get().setPaid(true);
+            eventEnrollmentRepository.save(enrollment.get());
+        }
+    }
+
 }

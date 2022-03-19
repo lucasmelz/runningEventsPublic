@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Running Events Admin Interface</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script/adminScript.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+<div id='header'>
+    <div class = 'navBar'>
+        <img src='images/sport.png' alt="logo" id="logo"><img>
+        <a href="#seeClassifications_" id='seeClassificationsButton' onclick="displayClassif()">Classifications</a>
+        <a href="#registerNewEvent_" id='registerEvent' onclick="displayRegisterEvent()">Register new event</a>
+        <a href="#registerNewEventSmall_" id='registerEventSmall' onclick="displayRegisterEvent()">Register event</a>
+
+        <a href="#recordTimeStamps_" id = 'recordTimeStampsButton' onclick="displayRecordTimeStamps()">Record timestamps</a>
+        <a href= "/logout" id = "logoutButton">Logout</a>
+    </div>
+</div>
+
+<div id = "searchEvent" class="searchAdmin">
+    <form id="searchingEvent">
+        <label id="searchLabel">Name or date of event:</label>
+        <br>
+        <input type="text" name="nome" id="eventInput">
+        <br>
+        <input type="button" value='submit' id='submitEvent' onclick="searchSpecificEvent()">
+    </form>
+</div>
+
+<div id="classificationsAdmin">
+</div>
+<div id="registerEventSection">
+    <h2>Register new event</h2>
+
+    <form class="standardForm" id = "registerEventForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="eventNameForm" name="name"><br>
+        <label for="description">Description:</label><br>
+        <input type="text" id="descriptionForm" name="description"><br>
+        <label for="enrollmentPrice" id="enrollmentLabel">Enrollment price:</label><br>
+        <input type="text" id="enrollmentPriceForm" name="enrollmentPrice"><br>
+        <label for="day">Day:</label><br>
+        <input type="text" id="dayForm" name="day"><br>
+        <label for="month">Month:</label><br>
+        <input type="text" id="monthForm" name="month"><br>
+        <label for="year">Year:</label><br>
+        <input type="text" id="yearForm" name="year"><br>
+        <label for="hour">Hour:</label><br>
+        <input type="text" id="hourForm" name="hour"><br>
+        <label for="min">Minutes:</label><br>
+        <input type="text" id="minForm"  name="min"><br>
+        <button class="submitForm" type="button" id="submitRegisterEvent" onclick="registerNewEvent()">Register event.</button>
+    </form>
+
+    <div id="registerEventOutput">
+
+    </div>
+
+</div>
+
+
+<div id="recordTimeStamps">
+    <h2>Record Timestamps</h2>
+    <p id="rtInstructions">Click in the name of event to record new timestamps.<br>
+    You can also use the search mechanism above.</p>
+</div>
+<div id="allEvents">
+
+</div>
+
+<div id="results">
+</div>
+
+
+
+</body>
+</html>

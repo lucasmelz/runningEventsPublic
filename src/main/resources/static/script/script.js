@@ -1,4 +1,13 @@
 $(function () { // Same as document.addEventListener("DOMContentLoaded"...
+
+     let page = window.location.pathname.split("/").pop();
+     $.get("/api/v1/isAuthenticated", "", function (data) {
+          //if user is authenticated, redirect to authenticated user homepage
+          if (data && (page === 'index.html' || page === '')) {
+               window.location.replace("/homepage.html");
+          }
+     });
+
      document.getElementById('homeButton').addEventListener("click",function () {
           displayPageOfEvents("/api/v1/getEventsPageable", 0);
           displayAndHide('home');
@@ -29,13 +38,6 @@ $(function () { // Same as document.addEventListener("DOMContentLoaded"...
      document.getElementById('searchIcon').addEventListener("click", function(){
           searchEvent();
      });
-
-     /* $.get("/api/v1/isAuthenticated", "", function (data) {
-      //if user is authenticated, redirect to authenticated user homepage
-        if (data && (page === 'index.html' || page === '')) {
-                     window.location.replace("/homepage.html");
-        }
-      });*/
      displayPageOfEvents("/api/v1/getEventsPageable", 0);
 })
 

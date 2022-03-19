@@ -96,6 +96,15 @@
             margin:auto;
         }
 
+        #myEnrollments button{
+            margin-left:100px;
+            margin-top:10px;
+        }
+
+        #myEnrollments p{
+            font-size:1em;
+        }
+
         #enrollmentDetails p{
             margin-left:5px;
             margin-right:5px;

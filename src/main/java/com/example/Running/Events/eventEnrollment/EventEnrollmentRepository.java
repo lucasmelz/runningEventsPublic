@@ -12,4 +12,6 @@ public interface EventEnrollmentRepository extends JpaRepository<EventEnrollment
 
     Optional<List<EventEnrollment>> findEventEnrollmentByEventId(Long eventId);
 
+    Optional<EventEnrollment> findEventEnrollmentByEnrollmentId(Long enrollmentId);
+
 }
