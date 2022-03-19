@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    password: 2b7a555f9
-    url: jdbc:postgresql://localhost:5432/runningevents
-    username: citizen
+    password: 499cb2237807a3882c8b3dc4c1679ad10905afdca646822c252f489769057ef6
+    url: jdbc:postgresql://ec2-34-242-89-204.eu-west-1.compute.amazonaws.com:5432/d908fvnh6u2q86
+    username: txuuhhvtmebbtb
     hikari:
       auto-commit: false
   jpa:

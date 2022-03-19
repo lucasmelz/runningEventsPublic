@@ -38,6 +38,7 @@ $(function () { // Same as document.addEventListener("DOMContentLoaded"...
      document.getElementById('searchIcon').addEventListener("click", function(){
           searchEvent();
      });
+     document.getElementById('signUpUser').addEventListener("click", registerUser);
      displayPageOfEvents("/api/v1/getEventsPageable", 0);
 })
 
@@ -641,30 +642,25 @@ function calculateClassifications(event_id){
 }
 
 function registerUser(){
-     let formData = new FormData(document.getElementById('registrationForm'));
-     let object = {};
-     formData.forEach((value, key) => {
-          // Reflect.has in favor of: object.hasOwnProperty(key)
-          if(!Reflect.has(object, key)){
-               object[key] = value;
-               return;
-          }
-          if(!Array.isArray(object[key])){
-               object[key] = [object[key]];
-          }
-          object[key].push(value);
-     });
-     let jsonObject = JSON.stringify(object);
+   let firstName = document.querySelector("#firstName").value;
+   let lastName = document.querySelector("#lastName").value;
+   let email = document.querySelector("#email").value;
+   let password = document.querySelector("#passwordR").value;
+   let genderSelector = document.querySelector('#gender');
+   let categorySelector = document.querySelector('#competitiveCategory');
+   let gender = genderSelector.options[genderSelector.selectedIndex].value;
+   let category = categorySelector.options[categorySelector.selectedIndex].value;
 
-     fetch('/api/v1/registration', {
-          method: "POST",
-          body: jsonObject,
-          headers: {"Content-type": "application/json; charset=UTF-8"}
-     })
-         .then(response => response.json())
-         .then(json => console.log(json))
-         .catch(err => console.log(err));
-
+     $.post("api/v1/registration",
+              {
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              password: password,
+              gender: gender,
+              competitiveCategory: category
+              },
+         ()=>{}).done(alert("Registration successful!"));
 }
 
 function sortBy(prop) {
