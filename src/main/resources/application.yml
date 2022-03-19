@@ -7,7 +7,7 @@ spring:
   datasource:
     password: ${{ secrets.DATASOURCE_PASS }}
     url: jdbc:postgresql://ec2-34-242-89-204.eu-west-1.compute.amazonaws.com:5432/d908fvnh6u2q86
-    username:  ${{ secrets.DATASOURCE_USER }}
+    username: ${{ secrets.DATASOURCE_USER }}
     hikari:
       auto-commit: false
   jpa:
@@ -21,7 +21,7 @@ spring:
 
   mail:
     host: smtp.gmail.com
-    port: 25
+    port: 587
     username: runningeventsmail@gmail.com
     password:  ${{ secrets.EMAIL_PASS }}
 

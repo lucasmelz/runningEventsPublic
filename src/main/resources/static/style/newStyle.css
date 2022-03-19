@@ -120,11 +120,17 @@
             margin-right:10px;
         }
 
-        #signUp, #signIn{
+        #signUp {
             display:none;
             width:290px;
             margin:auto;
             padding-left:50px;
+        }
+
+        #signIn{
+            display: none;
+            width: 230px;
+            margin:auto;
         }
 
         #loginForm{
@@ -132,11 +138,11 @@
         }
 
         #signUp h2{
-            margin-left:-40px;
+            margin-left:-70px;
         }
 
         #signIn h2{
-            margin-left:-36px;
+            margin-left:-22px;
         }
 
 
@@ -285,9 +291,8 @@
         /* Styling search mechanism */
 
         #searchInput{
-            width: 235px;
-            margin: 0 auto 8px;
-            padding-left:20px;
+            width: 190px;
+            margin: auto;
         }
 
         #searchIcon{
@@ -308,7 +313,7 @@
         #searchTextBox{
             height:25px;
             margin-right:-4px;
-            margin-left:13px;
+            margin-left:8px;
         }
 
         /* Styling event cards and event container */

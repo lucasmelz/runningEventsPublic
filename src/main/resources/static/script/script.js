@@ -651,16 +651,25 @@ function registerUser(){
    let gender = genderSelector.options[genderSelector.selectedIndex].value;
    let category = categorySelector.options[categorySelector.selectedIndex].value;
 
-     $.post("api/v1/registration",
-              {
-              firstName: firstName,
-              lastName: lastName,
-              email: email,
-              password: password,
-              gender: gender,
-              competitiveCategory: category
-              },
-         ()=>{}).done(alert("Registration successful!"));
+     $.ajax({
+          type: "POST",
+          url: "api/v1/registration",
+          data:   JSON.stringify({
+               firstName: firstName,
+               lastName: lastName,
+               email: email,
+               password: password,
+               gender: gender,
+               competitiveCategory: category
+          }),
+          headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+          }
+     }).done((data, textStatus, jqXHR )=>{
+          alert("Registration successful!");
+          console.log(jqXHR.responseText);
+     })
 }
 
 function sortBy(prop) {
