@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Running Events</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="script/myscript.js"></script>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+
+<div id='header'>
+    <div class = 'navBar'>
+        <img src='images/sport.png' alt="logo" id="logo"><img>
+        <a href="#home" id='homeButton' onclick="displayEvents()">RunningEvents</a>
+        <a href="#home_" id='homeSmallButton' onclick="displayEvents()">Home</a>
+        <a href="#classifications_" onclick="displayClassifications()">Classifications</a>
+        <a href="#aboutUs" id = 'aboutButton' onclick="displayAbout()">About the Company </a>
+        <a href= "#aboutSmall" id = 'aboutSmallButton' onclick="displayAbout()">About</a>
+        <a href="#myEnrollments_" onclick="displayMyEnrollments()">My Enrollments</a>
+        <a href= "/logout" id = "signUpButton" onclick="">Logout</a>
+    </div>
+</div>
+
+<div id = "searchEvent">
+    <form id="searchingEvent">
+        <label id="searchLabel">Name or date of event:</label>
+        <br>
+        <input type="text" name="nome" id="eventInput">
+        <br>
+        <input type="button" value='submit' id='submitEvent' onclick="searchSpecificEvent()">
+    </form>
+</div>
+
+<div id = "searchResults">
+</div>
+
+<div id = "eventsList">
+</div>
+
+<div id = "classifications">
+
+</div>
+
+<div id = "about">
+    <h2>About the company</h2>
+    <h5>This is a mockup website of a company that promotes and helps to organize running events,
+        providing a web solution for event organizers. The website allows athletes to register and
+        enroll for running, also maintaining a persistent database of their classifications and other
+        statistics. Administrators can register new events and update the data concerning the athletes'
+        performance in each race. Developed by Lucas Werle Melz (44224).</h5>
+</div>
+
+
+<div id = "myEnrollments">
+    <h2>My Enrollments</h2>
+    <div id = 'listOfEnrollments'>
+
+    </div>
+</div>
+
+
+<div id = "listOfCompetitors">
+
+</div>
+
+
+
+</body>
+</html>
