@@ -59,7 +59,7 @@ public class EmailService implements EmailSender {
             LOGGER.info(response.getBody());
         } catch (IOException ex) {
             LOGGER.error("failed to send email", ex);
-            throw new IllegalStateException("failed to send email");
+            throw new IllegalStateException("failed to send email" + ex.toString());
         }
 
 
