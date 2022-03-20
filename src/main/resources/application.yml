@@ -22,20 +22,20 @@ spring:
         format_sql: true
     show-sql: true
 
-  mail:
-    host: smtp.sendgrid.net
-    port: 587
-    protocol: smtp
-    debug: true
-    username: apikey
-    password:  ${{ secrets.EMAIL_PASS }}
+#  mail:
+#    host: smtp.sendgrid.net
+#    port: 587
+#    protocol: smtp
+#    debug: true
+#    username: apikey
+#    password:  ${{ secrets.EMAIL_PASS }}
 
-
-    properties:
-      mail:
-        smtp:
-          ssl:
-            trust: "*"
-          auth: true
-          starttls:
-            enable: true
+#
+#    properties:
+#      mail:
+#        smtp:
+#          ssl:
+#            trust: "*"
+#          auth: true
+#          starttls:
+#            enable: true
