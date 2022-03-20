@@ -36,33 +36,18 @@ import javax.mail.internet.MimeMessage;
 public class EmailService implements EmailSender {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
-    //private final TwilioConfig twilioConfig;
-    private final JavaMailSender mailSender;
+    private final TwilioConfig twilioConfig;
+    //private final JavaMailSender mailSender;
 
     @Override
     @Async
     public void send(String to, String email) {
-        try {
-            MimeMessage mimeMessage = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-            helper.setText(email, true);
-            helper.setTo(to);
-            helper.setSubject("Confirm your email");
-            helper.setFrom("runningeventsmail@gmail.com");
-            mailSender.send(mimeMessage);
-        } catch (MessagingException e) {
-            LOGGER.error("failed to send email", e);
-            throw new IllegalStateException("failed to send email");
-        }
-    }
-}
 
-     /*   // the sender email should be the same as we used to Create a Single Sender Verification
         Email from = new Email("runningeventsmail@gmail.com");
         String subject = "Confirm your account at RunningEvents Platform";
-        Email to = new Email("recipient");
-        Content content = new Content("text/plain", email);
-        Mail mail = new Mail(from, subject, to, content);
+        Email recipient = new Email(to);
+        Content content = new Content("text/html", email);
+        Mail mail = new Mail(from, subject, recipient, content);
 
         SendGrid sg = new SendGrid(this.twilioConfig.getApi_key());
         Request request = new Request();
@@ -76,5 +61,23 @@ public class EmailService implements EmailSender {
             LOGGER.error("failed to send email", ex);
             throw new IllegalStateException("failed to send email");
         }
-    }*/
+
+
+/*        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+            helper.setText(email, true);
+            helper.setTo(to);
+            helper.setSubject("Confirm your email");
+            helper.setFrom("runningeventsmail@gmail.com");
+            mailSender.send(mimeMessage);
+        } catch (MessagingException e) {
+            LOGGER.error("failed to send email", e);
+            throw new IllegalStateException("failed to send email");
+        }*/
+    }
+}
+
+
+
 
