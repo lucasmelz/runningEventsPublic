@@ -37,7 +37,6 @@ public class EmailService implements EmailSender{
     @Value("${my.secret}")
     private String secret;
 
-
     @Override
     @Async
     public void send(String recipient, String email) {

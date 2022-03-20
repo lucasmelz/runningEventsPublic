@@ -1,3 +1,6 @@
+my:
+  secret: ${{secrets.SENDGRID_APIKEY}}
+
 server:
   error:
     include-message: always
@@ -20,11 +23,11 @@ spring:
     show-sql: true
 
   mail:
-    host: smtp.gmail.com
-    port: 25
+    host: smtp.aol.com
+    port: 465
     protocol: smtp
     debug: true
-    username: runningeventsmail@gmail.com
+    username: runningeventsemail@aol.com
     password:  ${{ secrets.EMAIL_PASS }}
 
 
