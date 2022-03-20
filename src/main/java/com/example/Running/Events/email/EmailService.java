@@ -2,8 +2,11 @@ package com.example.Running.Events.email;
 
 import java.io.IOException;
 
+import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.sendgrid.Content;
@@ -31,6 +34,9 @@ import javax.mail.internet.MimeMessage;
 public class EmailService implements EmailSender{
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+    @Value("${secret}")
+    private String secret;
+
 
     @Override
     @Async
@@ -43,7 +49,7 @@ public class EmailService implements EmailSender{
         Content content = new Content("text/plain", email);
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid(${{secrets.SENDGRID_APIKEY}} );
+        SendGrid sg = new SendGrid(secret);
         Request request = new Request();
         try {
             request.setMethod(Method.POST);

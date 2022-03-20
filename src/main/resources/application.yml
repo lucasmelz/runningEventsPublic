@@ -1,3 +1,5 @@
+secret: ${{secrets.SENDGRID_APIKEY}}
+
 server:
   error:
     include-message: always
