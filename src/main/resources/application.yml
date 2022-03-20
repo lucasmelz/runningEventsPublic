@@ -1,5 +1,5 @@
-my:
-  secret: ${{ secrets.SENDGRID_APIKEY }}
+twilio:
+  api_key: ${{ secrets.SENDGRID_APIKEY }}
 
 server:
   error:

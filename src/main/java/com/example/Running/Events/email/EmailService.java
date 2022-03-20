@@ -2,11 +2,13 @@ package com.example.Running.Events.email;
 
 import java.io.IOException;
 
+import com.example.Running.Events.TwilioConfig.TwilioConfig;
 import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import com.sendgrid.Content;
@@ -34,8 +36,8 @@ import javax.mail.internet.MimeMessage;
 public class EmailService implements EmailSender{
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
-    @Value("${my.secret}")
-    private String secret;
+    private final TwilioConfig twilioConfig;
+
 
     @Override
     @Async
@@ -48,7 +50,7 @@ public class EmailService implements EmailSender{
         Content content = new Content("text/plain", email);
         Mail mail = new Mail(from, subject, to, content);
 
-        SendGrid sg = new SendGrid(secret);
+        SendGrid sg = new SendGrid(this.twilioConfig.getApi_key());
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
