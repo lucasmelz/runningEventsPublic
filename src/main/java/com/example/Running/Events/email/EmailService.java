@@ -1,5 +1,18 @@
 package com.example.Running.Events.email;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
@@ -19,11 +32,33 @@ public class EmailService implements EmailSender{
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
-    private final JavaMailSender mailSender;
-
     @Override
     @Async
-    public void send(String to, String email) {
+    public void send(String recipient, String email) {
+
+        // the sender email should be the same as we used to Create a Single Sender Verification
+        Email from = new Email("runningeventsmail@gmail.com");
+        String subject = "Confirm your account at RunningEvents Platform";
+        Email to = new Email("recipient");
+        Content content = new Content("text/plain", email);
+        Mail mail = new Mail(from, subject, to, content);
+
+        SendGrid sg = new SendGrid(${{secrets.SENDGRID_APIKEY}} );
+        Request request = new Request();
+        try {
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+            LOGGER.info(response.getBody());
+        } catch (IOException ex) {
+            LOGGER.error("failed to send email", ex);
+            throw new IllegalStateException("failed to send email");
+        }
+    }
+
+
+/*
        try{
            MimeMessage mimeMessage = mailSender.createMimeMessage();
            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -35,6 +70,6 @@ public class EmailService implements EmailSender{
        } catch(MessagingException e){
            LOGGER.error("failed to send email", e);
            throw new IllegalStateException("failed to send email");
-       }
-    }
+       }*/
 }
+

@@ -38,7 +38,7 @@ public class RegistrationService {
                         AppUserRole.ROLE_USER
                 )
         );
-        String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
+        String link = "https://running-events.herokuapp.com/api/v1/registration/confirm?token=" + token;
         emailSender.send(request.getEmail(), buildEmail(request.getFirstName(), link));
         return token;
     }
