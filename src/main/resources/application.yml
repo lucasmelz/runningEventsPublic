@@ -21,7 +21,7 @@ spring:
 
   mail:
     host: smtp.gmail.com
-    port: 25
+    port: 587
     username: runningeventsmail@gmail.com
     password:  ${{ secrets.EMAIL_PASS }}
 
