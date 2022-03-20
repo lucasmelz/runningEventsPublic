@@ -20,11 +20,11 @@ spring:
     show-sql: true
 
   mail:
-    host: smtp.mail.yahoo.com
-    port: 587
+    host: smtp.aol.com
+    port: 465
     protocol: smtp
     debug: true
-    username: runningeventsemail@yahoo.com
+    username: runningeventsemail@aol.com
     password:  ${{ secrets.EMAIL_PASS }}
 
 
