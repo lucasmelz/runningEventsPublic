@@ -34,7 +34,7 @@ import javax.mail.internet.MimeMessage;
 public class EmailService implements EmailSender{
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
-    @Value("${secret}")
+    @Value("${my.secret}")
     private String secret;
 
 

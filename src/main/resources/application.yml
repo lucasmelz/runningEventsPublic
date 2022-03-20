@@ -1,4 +1,3 @@
-secret: ${{secrets.SENDGRID_APIKEY}}
 
 server:
   error:
@@ -31,6 +30,8 @@ spring:
 
 
     properties:
+      my:
+        secret: ${{secrets.SENDGRID_APIKEY}}
       mail:
         smtp:
           ssl:
