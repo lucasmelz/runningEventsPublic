@@ -49,7 +49,7 @@ public class EmailService implements EmailSender {
         Content content = new Content("text/html", email);
         Mail mail = new Mail(from, subject, recipient, content);
 
-        SendGrid sg = new SendGrid(this.twilioConfig.getApi_key());
+        SendGrid sg = new SendGrid("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");
         Request request = new Request();
         try {
             request.setMethod(Method.POST);
