@@ -662,6 +662,7 @@ function registerUser(){
                gender: gender,
                competitiveCategory: category
           }),
+          dataType: "json",
           headers: {
                'Accept': 'application/json',
                'Content-Type': 'application/json'
