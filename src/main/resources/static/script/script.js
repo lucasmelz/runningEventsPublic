@@ -666,9 +666,8 @@ function registerUser(){
                'Accept': 'application/json',
                'Content-Type': 'application/json'
           }
-     }).done((data, textStatus, jqXHR )=>{
-          alert("Registration successful!");
-          console.log(jqXHR.responseText);
+     }).done(function(){
+          window.alert("Registration successful!");
      })
 }
 
