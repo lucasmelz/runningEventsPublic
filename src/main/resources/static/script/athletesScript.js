@@ -299,6 +299,7 @@ function confirmEnrollment(eventId){
 }
 
 function setMyEnrollments(){
+    document.querySelector("#allEnrollments").innerHTML = "";
     $.get("/api/v1/username", "", () => {})
         .done(function (data) {
             let username = data;
