@@ -669,6 +669,8 @@ function registerUser(){
           }
      }).done(function(){
           window.alert("Registration successful!");
+     }).fail(function(){
+          window.alert("Oops! Something wrong happened!");
      })
 }
 
