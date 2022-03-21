@@ -357,6 +357,11 @@ function setMyEnrollments(){
                                 document.querySelector("#allEnrollments").appendChild(enrollmentDiv);
                             })
                     }
+                    if(!enrollments.length){
+                        let noEnrollments = document.createElement("h3");
+                        noEnrollments.innerText = "You haven't enrolled to any events!";
+                        document.querySelector("#allEnrollments").appendChild(noEnrollments);
+                    }
                 })
         })
 }
