@@ -132,7 +132,8 @@ function displayPageOfEvents(url, pageNumber){
                     eventInfo.appendChild(description);
 
                     let eventDate = document.createElement("p");
-                    eventDate.innerText = "Date: " + new Date(events[i]['date']).toDateString();
+                    let date = new Date(events[i]['date']);
+                    eventDate.innerText = "Date: " + date.toUTCString().substring(0,date.toUTCString().length-7);
                     eventInfo.appendChild(eventDate);
 
                     let enrollmentPrice = document.createElement("p");

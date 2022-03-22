@@ -1,1 +1,1 @@
-# runningEvents
+# runningEventsPublic

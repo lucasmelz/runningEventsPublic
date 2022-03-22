@@ -9,7 +9,7 @@ server:
 spring:
   datasource:
     password: ${{ secrets.DATASOURCE_PASS }}
-    url: jdbc:postgresql://ec2-34-242-89-204.eu-west-1.compute.amazonaws.com:5432/d908fvnh6u2q86
+    url: URL_DATABASE_POSTGRESQL
     username: ${{ secrets.DATASOURCE_USER }}
     hikari:
       auto-commit: false
