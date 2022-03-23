@@ -36,9 +36,7 @@ https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81
     variable which states if the payment is confirmed or not.</li>
     <li><b>event</b>: each event has an unique identifier, a name, a description, variables corresponding to the date of the event, a temporal
       status(past, current or future) and an image. </li>
-    <li><b>time_stamp</b>: this entity is used to store all the statistics concerning each athlete's performance. It has an unique identifier, 
-      a number corresponding to the event identifier,a variable corresponding to the athlete's name, username, gender and competitive category. This             entity has four variables used to store the instants corresponding to four stages of the running, START, P1, P2, P3 and FINISH. The classifications       are calculated based on these statistics. The classifications are calculated in the front-end by accessing the timestamps of each running. The
-    classifications are not stored in the database, only the timestamps.</li>
+    <li><b>time_stamp</b>: this entity is used to store all the statistics concerning each athlete's performance. It has an unique identifier, a variable that stores the id of the corresponding event and variables to store the athlete's data (name, username, gender and competitive category). This entity has four LocalDateTime objects as instance variables to store the instants corresponding to four stages of the running, START, P1, P2, P3 and FINISH. The classifications are calculated based on these statistics in the front-end by accessing the timestamps of each running. The classifications are not stored in the database, only the timestamps.</li>
 </ul>
  </p>
  <h2>Endpoints</h2>
@@ -68,6 +66,8 @@ https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81
  </p>
 
 <h2>User interface</h2>
+<h3>HTML Endpoints</h3>
+<p>All views are dinamically loaded in three different HTML pages, <i>index.html</i>, which is the interface accessible to the general public, <i>homepage.html</i>, which is the interface accessible only to authenticated users and <i>admin.html</i>, whose name is self-explanatory.</p>
 <h4>Registering new user and enrolling in an event</h4>
 <img src="readMeImages/registeringUser_enrolling.gif">
 <h4>Registering new event</h4>
