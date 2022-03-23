@@ -17,3 +17,33 @@ https://www.youtube.com/watch?v=QwQuro7ekvc <br>
 If you have doubts about how to integrate the Sendgrid Emailing System to the WebApp, it's all throughly explained in the following link:<br>
 https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81e9637a1f05
 </p>
+
+<h2>Persistent data storage using Spring Data JPA and PostgreSQL</h2>
+<p>
+  Sprint Data JPA is an add-on that provides a framework for a complete abstraction over the DAO(Data Access Object) layer.
+  In other words, Spring Data JPA reduces the number of artifacts we need to define and mantain, providing consistent built-in
+  patterns to access data and a consistent configuration. The entities that constitute the database of this WebApp are the following:
+  <ul> 
+    <li><b>app_user</b>: entity that represents the user. It has an unique identifier, a first name, last name, an user profile (admin or user),
+    email (which is also the username), password, gender, a competitive category (corresponding to it's age), a variable that indicates if the
+    account is verified or not (that is done through an activation link sent by email) and the list of events in which the user enrolled.</li>
+    <li><b>app_user_event_enrollment_list</b>: this is the entity representing the list of enrollments of each user. </li>
+    <li><b>confirmation_token</b>: confirmation token generated automatically for each new user that signs up. </li>
+    <li><b>confirmation_token</b>: confirmation token generated automatically for each new user that signs up. </li>
+    <li><b>event</b>: each event has an unique identifier, a name, a description, variables corresponding to the date of the event, a temporal
+      status(past, current or future) and an image. </li>
+    <li><b>event_enrollment</b>: each enrollment has an unique identifier, one variable with the eventId in which the user enrolled, the username
+    of the user enrolled, its na,e, gender and competitive category, as well as a reference for the payment of the enrollment fee and a boolean
+    variable which states if the payment is confirmed or not.</li>
+    <li><b>event</b>: each event has an unique identifier, a name, a description, variables corresponding to the date of the event, a temporal
+      status(past, current or future) and an image. </li>
+    <li><b>time_stamp</b>: this entity is used to store all the statistics concerning each athlete's performance. It has an unique identifier, 
+      a number corresponding to the event identifier,a variable corresponding to the athlete's name, username, gender and competitive category. This             entity has four variables used to store the instants corresponding to four stages of the running, START, P1, P2, P3 and FINISH. The classifications       are calculated based on these statistics. The classifications are calculated in the front-end by accessing the timestamps of each running. The
+    classifications are not stored in the database, only the timestamps.</li>
+</ul>
+
+ </p>
+
+
+
+<img src="readMeImages/registeringUser_enrolling.gif">
