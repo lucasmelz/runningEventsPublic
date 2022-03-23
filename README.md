@@ -68,11 +68,11 @@ https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81
  </p>
 
 <h2>User interface</h2>
-<h4>Registering new user and enrolling in an event.</h4>
+<h4>Registering new user and enrolling in an event</h4>
 <img src="readMeImages/registeringUser_enrolling.gif">
-<h4>Registering new event.</h4>
+<h4>Registering new event</h4>
 <img src="readMeImages/registerEvent.gif">
-<h4>Updating event information.</h4>
+<h4>Updating event information</h4>
 <img src="readMeImages/updateInfo.gif">
 <h4>Registering athletes' timestamps and classification system</h4>
 <img src="readMeImages/classifications.gif">
