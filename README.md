@@ -20,7 +20,7 @@ https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81
 
 <h2>Persistent data storage using Spring Data JPA and PostgreSQL</h2>
 <p>
-  Sprint Data JPA is an add-on that provides a framework for a complete abstraction over the DAO(Data Access Object) layer.
+  Sprint Data JPA is an add-on that provides a framework for a complete abstraction over the DAO (Data Access Object) layer.
   In other words, Spring Data JPA reduces the number of artifacts we need to define and mantain, providing consistent built-in
   patterns to access data and a consistent configuration. The entities that constitute the database of this WebApp are the following:
   <ul> 
