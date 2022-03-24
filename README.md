@@ -31,9 +31,7 @@ https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81
     <li><b>confirmation_token</b>: confirmation token generated automatically for each new user that signs up. </li>
     <li><b>event</b>: each event has an unique identifier, a name, a description, variables corresponding to the date of the event, a temporal
       status(past, current or future) and an image. </li>
-    <li><b>event_enrollment</b>: each enrollment has an unique identifier, one variable with the eventId in which the user enrolled, the username
-    of the user enrolled, its na,e, gender and competitive category, as well as a reference for the payment of the enrollment fee and a boolean
-    variable which states if the payment is confirmed or not.</li>
+    <li><b>event_enrollment</b>: each enrollment has an unique identifier, one variable that stores the event identifier in which the user enrolled, the username of the user enrolled, their name, gender and competitive category, as well as a payment reference of the enrollment fee and a boolean variable which states if the payment is confirmed or not.</li>
     <li><b>event</b>: each event has an unique identifier, a name, a description, variables corresponding to the date of the event, a temporal
       status(past, current or future) and an image. </li>
     <li><b>time_stamp</b>: this entity is used to store all the statistics concerning each athlete's performance. It has an unique identifier, a variable that stores the id of the corresponding event and variables to store the athlete's data (name, username, gender and competitive category). This entity has four LocalDateTime objects as instance variables to store the instants corresponding to four stages of the running, START, P1, P2, P3 and FINISH. The classifications are calculated based on these statistics in the front-end by accessing the timestamps of each running. The classifications are not stored in the database, only the timestamps.</li>
