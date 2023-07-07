@@ -1,5 +1,4 @@
 <h1>Running Events</h1>
-<h2>https://running-events.herokuapp.com/</h2>
 <p>This is a mockup website (although completely functional) of a company that promotes and helps to organize running events, providing a web solution for event organizers. The website allows athletes to register and enroll for running, maintaining a persistent database with the users' information, which events they enrolled, if they confirmed payment and also their classifications and other statistics. Administrators can register new events and update the data concerning the athletes' performance in each race.
 
 This platform is a RESTful WebApp implemented with the SpringBoot framework. The server-side layer makes use of Java for the business logic and the database was built with PostgreSQL and Java Persistence Architecture (JPA). The front-end consists in HTML, CSS and Javascript (jQuery library is widely used for requests to the server). Twilio Sendgrid API is used to send emails to the users, currently just to verify their accounts. This WebApp was developed by Lucas Werle Melz (https://lucasmelz.github.io/portfolio).</p>
