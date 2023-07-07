@@ -66,6 +66,7 @@ https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81
 <h2>User interface</h2>
 <h3>HTML Endpoints</h3>
 <p>All views are dinamically loaded in three different HTML pages, <i>index.html</i>, which is the interface accessible to the general public, <i>homepage.html</i>, which is the interface accessible only to authenticated users and <i>admin.html</i>, whose name is self-explanatory.</p>
+<div align="center">
 <h4>Registering new user and enrolling in an event</h4>
 <img src="readMeImages/registeringUser_enrolling.gif">
 <h4>Registering new event</h4>
@@ -74,3 +75,4 @@ https://medium.com/javarevisited/sending-emails-with-sendgrid-and-spring-boot-81
 <img src="readMeImages/updateInfo.gif">
 <h4>Registering athletes' timestamps and classification system</h4>
 <img src="readMeImages/classifications.gif">
+</div>
